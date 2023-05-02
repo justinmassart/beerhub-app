@@ -3,5 +3,6 @@
         "activityBar.background": "#482413",
         "titleBar.activeBackground": "#64331A",
         "titleBar.activeForeground": "#FEFBFA"
-    }
+    },
+    "cSpell.language": "en,fr"
 }
