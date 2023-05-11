@@ -5,12 +5,31 @@
  * @format
  */
 
+const path = require('path');
+
 module.exports = {
   transformer: {
+    babelTransformerPath: require.resolve(
+      'metro-react-native-babel-transformer',
+    ),
     getTransformOptions: async () => ({
       transform: {
         experimentalImportSupport: false,
-        inlineRequires: true,
+        inlineRequires: false,
+      },
+      resolver: {
+        sourceExts: ['jsx', 'js', 'ts', 'tsx'], // Include any other file extensions you are using
+        resolveRequest: (context, realModuleName, platform, moduleName) => {
+          if (moduleName.startsWith('./') || moduleName.startsWith('../')) {
+            const basePath = path.resolve(context, 'App');
+            const resolvedPath = path.resolve(
+              basePath,
+              moduleName.replace(/^(?:\.\.\/)+/, ''),
+            );
+            return resolvedPath;
+          }
+          return null;
+        },
       },
     }),
   },
