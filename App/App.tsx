@@ -19,7 +19,7 @@ const App = () => {
   const theme = getTheme(false);
   const clearAsyncStorage = async () => {
     try {
-      await AsyncStorage.clear();
+      await AsyncStorage.removeItem('beers');
       console.log('AsyncStorage cleared successfully.');
     } catch (error) {
       console.log('Error clearing AsyncStorage:', error);
@@ -28,7 +28,7 @@ const App = () => {
 
   useEffect(() => {
     const handleAppStateChange = async (state: AppStateStatus) => {
-      if (state === 'background' || state === 'inactive') {
+      if (state === 'inactive') {
         await clearAsyncStorage();
       }
     };

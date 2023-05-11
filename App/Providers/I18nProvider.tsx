@@ -7,6 +7,7 @@ import {getDefaultLanguage} from 'app/Config/Languages';
 
 const I18nProvider = ({children}: {children: JSX.Element}) => {
   const language = getDefaultLanguage();
+  console.log(language);
   useEffect(() => {
     i18n.use(initReactI18next).init({
       resources,

@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Button} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Text from 'app/Components/Atoms/Text';
 import i18n from 'app/Services/i18n';
@@ -8,8 +9,9 @@ import i18n from 'app/Services/i18n';
 const Language = () => {
   const {navigate} = useNavigation();
 
-  const chooseLanguage = (locale: string) => {
+  const chooseLanguage = async (locale: string) => {
     i18n.changeLanguage(locale);
+    await AsyncStorage.setItem('locale', locale);
     navigate('Home');
   };
 
