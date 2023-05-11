@@ -4,11 +4,7 @@ import {FC} from 'react';
 import styled from 'app/Themes/Styled';
 import {FontSize, Metrics, FontFamily, FontWeight} from 'app/Themes';
 
-console.log(
-  FontFamily + '            TYUHIJUHYGTFRDYBHNJVCTDFVGBHJNKBVCHJGHVKBLKNBVC',
-);
-
-type FontFamilyType = 'primary' | 'primary-light' | 'secondary';
+type FontFamilyType = 'primary' | 'secondary' | 'tertiary';
 export type FontWeightType =
   | 'thin'
   | 'light'

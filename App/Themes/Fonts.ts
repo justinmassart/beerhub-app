@@ -10,7 +10,9 @@ export const FontWeight = {
 };
 
 export const FontFamily = {
-  primary: 'Lato-Black',
+  primary: 'Lato-Regular',
+  secondary: 'Alegreya-Medium',
+  tertiary: 'RobotoCondensed-Regular',
 };
 
 const defaultFontSize = {

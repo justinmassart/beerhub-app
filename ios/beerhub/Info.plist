@@ -36,11 +36,36 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Alegreya-Black.ttf</string>
-		<string>Lato-LightItalic.tff</string>
+		<string>Alegreya-BlackItalic.ttf</string>
+		<string>Alegreya-Bold.ttf</string>
+		<string>Alegreya-BoldItalic.ttf</string>
+		<string>Alegreya-ExtraBold.ttf</string>
+		<string>Alegreya-ExtraBoldItalic.ttf</string>
+		<string>Alegreya-Italic-VariableFont_wght.ttf</string>
+		<string>Alegreya-Medium.ttf</string>
+		<string>Alegreya-MediumItalic.ttf</string>
+		<string>Alegreya-SemiBold.ttf</string>
+		<string>Alegreya-SemiBoldItalic.ttf</string>
+		<string>Alegreya-VariableFont_wght.ttf</string>
+		<string>Lato-Black.ttf</string>
+		<string>Lato-BlackItalic.ttf</string>
+		<string>Lato-Bold.ttf</string>
+		<string>Lato-BoldItalic.ttf</string>
+		<string>Lato-Italic.ttf</string>
+		<string>Lato-Light.ttf</string>
+		<string>Lato-LightItalic.ttf</string>
+		<string>Lato-Regular.ttf</string>
+		<string>Lato-Thin.ttf</string>
+		<string>Lato-ThinItalic.ttf</string>
+		<string>RobotoCondensed-Bold.ttf</string>
+		<string>RobotoCondensed-BoldItalic.ttf</string>
+		<string>RobotoCondensed-Italic.ttf</string>
+		<string>RobotoCondensed-Light.ttf</string>
+		<string>RobotoCondensed-LightItalic.ttf</string>
 		<string>RobotoCondensed-Regular.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
