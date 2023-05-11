@@ -1,14 +1,11 @@
-import i18n from 'app/Services/i18n';
 import axios from 'axios';
 import Config from 'react-native-config';
 
 const {BACKEND_URL} = Config;
 
-const lang = i18n.language;
-
-const GET_BEERS = async () => {
+const GET_BEERS = async (locale: string) => {
   try {
-    const response = await axios.get(`${BACKEND_URL}/${lang}/beers`);
+    const response = await axios.get(`${BACKEND_URL}/${locale}/beers`);
     const data = response.data.beers;
     return data;
   } catch (error) {

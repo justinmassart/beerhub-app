@@ -8,10 +8,6 @@ import {AnchorProvider} from '@nandorojo/anchor';
 import {getTheme} from './Themes';
 import Navigation from './Navigation/index';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {getDefaultLanguage} from './Config/Languages';
-
-const lng = getDefaultLanguage();
-console.log(lng);
 
 const App = () => {
   const theme = getTheme(false);
