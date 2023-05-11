@@ -1,33 +1,27 @@
-import {t} from 'i18next';
 import React, {useEffect, useState} from 'react';
 import {View, FlatList, Button} from 'react-native';
-import Text from 'app/Components/Atoms/Text';
+import {t} from 'i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import GET_BEERS from 'app/Operations/queries/getBeers';
 import i18n from 'app/Services/i18n';
-import {getDefaultLanguage} from 'app/Config/Languages';
+import Text from 'app/Components/Atoms/Text';
 
 const Home = () => {
   const [beers, setBeers] = useState(null);
-  const [locale, setLocale] = useState<string | null>(null);
+  const [locale, setLocale] = useState<string>(i18n.language);
 
   useEffect(() => {
     const getBeers = async () => {
-      if (locale) {
-        try {
-          const response = await GET_BEERS(locale);
-          const data = response.data;
-          await AsyncStorage.setItem('beers', JSON.stringify(data));
-          const beersFromStorage = await AsyncStorage.getItem('beers');
-          const parsedBeers = JSON.parse(beersFromStorage);
-          setBeers(parsedBeers);
-        } catch (error) {
-          console.log(error);
-        }
-      } else {
-        const defaultLang = getDefaultLanguage();
-        i18n.changeLanguage(defaultLang);
+      try {
+        const response = await GET_BEERS(locale);
+        const data = response.data;
+        await AsyncStorage.setItem('beers', JSON.stringify(data));
+        const beersFromStorage = await AsyncStorage.getItem('beers');
+        const parsedBeers = JSON.parse(beersFromStorage);
+        setBeers(parsedBeers);
+      } catch (error) {
+        console.log(error);
       }
     };
     getBeers();
