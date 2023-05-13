@@ -1,63 +1,48 @@
 import React, {useEffect, useState} from 'react';
-import {View, FlatList, Button} from 'react-native';
-import {t} from 'i18next';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-import GET_BEERS from 'app/Operations/queries/getBeers';
+import {View, Button} from 'react-native';
 import i18n from 'app/Services/i18n';
-import Text from 'app/Components/Atoms/Text';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useNavigation} from '@react-navigation/native';
 
 const Home = () => {
-  const [beers, setBeers] = useState(null);
+  const {navigate} = useNavigation();
   const [locale, setLocale] = useState<string>(i18n.language);
+  const handleLocaleChange = async (newLocale: string) => {
+    try {
+      await AsyncStorage.setItem('locale', newLocale);
+      i18n.changeLanguage(newLocale);
+      setLocale(newLocale);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  useEffect(() => {
-    const getBeers = async () => {
-      try {
-        const response = await GET_BEERS(locale);
-        const data = response.data;
-        await AsyncStorage.setItem('beers', JSON.stringify(data));
-        const beersFromStorage = await AsyncStorage.getItem('beers');
-        const parsedBeers = JSON.parse(beersFromStorage);
-        setBeers(parsedBeers);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getBeers();
-  }, [locale]);
-
-  const renderBeerItem = ({item}) => (
-    <View>
-      <Text>{item.name}</Text>
-      <Text>{item.translations[0].description}</Text>
-      <View style={{minHeight: 25}} />
-    </View>
-  );
+  useEffect(() => {}, [locale]);
 
   return (
     <View>
-      <Button
-        title="FR"
-        disabled={i18n.language === 'fr' ? true : false}
-        onPress={() => {
-          i18n.changeLanguage('fr');
-          setLocale('fr');
-        }}
-      />
-      <Button
-        title="EN"
-        disabled={i18n.language === 'en' ? true : false}
-        onPress={() => {
-          i18n.changeLanguage('en');
-          setLocale('en');
-        }}
-      />
-      <FlatList
-        data={beers}
-        renderItem={renderBeerItem}
-        keyExtractor={item => item.id.toString()}
-      />
+      <View>
+        <Button
+          title="FR"
+          disabled={i18n.language === 'fr' ? true : false}
+          onPress={() => {
+            handleLocaleChange('fr');
+          }}
+        />
+        <Button
+          title="EN"
+          disabled={i18n.language === 'en' ? true : false}
+          onPress={() => {
+            handleLocaleChange('en');
+          }}
+        />
+      </View>
+      <View style={{marginTop: 32}}>
+        <Button title="Beers" onPress={() => navigate('Beers')} />
+        <Button title="Places" onPress={() => navigate('Beers')} />
+        <Button title="Hub" onPress={() => navigate('Beers')} />
+        <Button title="Settings" onPress={() => navigate('Beers')} />
+      </View>
     </View>
   );
 };
