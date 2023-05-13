@@ -37,9 +37,6 @@ const Home = () => {
 
   return (
     <View>
-      <Text font="secondary" weight="medium" size="huge">
-        {t('Home.title')}
-      </Text>
       <Button
         title="FR"
         disabled={i18n.language === 'fr' ? true : false}
