@@ -14,7 +14,6 @@ const Navigator = () => {
   useEffect(() => {
     const checkStoredLocale = async () => {
       const storedLocale = await AsyncStorage.getItem('locale');
-      console.log(storedLocale);
 
       if (storedLocale) {
         setInitialRoute('Home');
