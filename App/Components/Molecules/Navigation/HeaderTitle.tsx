@@ -1,8 +1,8 @@
 import React, {useContext} from 'react';
 
-import Text from '../../Atoms/Text';
-import {Colors} from '../../../Themes';
-import {ThemeContext} from '../../../Themes/Styled';
+import Text from 'app/Components/Atoms/Text';
+import {Colors} from 'app/Themes';
+import {ThemeContext} from 'app/Themes/Styled';
 
 const HeaderTitle = ({
   title,
