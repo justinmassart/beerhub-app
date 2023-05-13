@@ -5,6 +5,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import HomeStack from 'app/Navigation/AppTab/HomeStack';
+import BeersStack from 'app/Navigation/AppTab/BeersStack';
 
 const RootStack = createStackNavigator();
 
@@ -42,6 +43,7 @@ const Navigator = () => {
           presentation: 'modal',
         }}>
         <RootStack.Screen name="Home" component={HomeStack} />
+        <RootStack.Screen name="Beers" component={BeersStack} />
         <RootStack.Screen name="Language" component={LanguagePage} />
       </RootStack.Navigator>
     </NavigationContainer>
