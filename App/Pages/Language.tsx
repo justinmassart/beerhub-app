@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Button} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -8,11 +8,18 @@ import i18n from 'app/Services/i18n';
 
 const Language = () => {
   const {navigate} = useNavigation();
+  const [locale, setLocale] = useState<string>(i18n.language);
 
-  const chooseLanguage = async (locale: string) => {
-    i18n.changeLanguage(locale);
-    await AsyncStorage.setItem('locale', locale);
-    navigate('Home');
+  const handleLocaleChange = async (newLocale: string) => {
+    try {
+      await AsyncStorage.setItem('locale', newLocale);
+      i18n.changeLanguage(newLocale);
+      setLocale(newLocale);
+      await AsyncStorage.removeItem('beers');
+      navigate('Home');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -21,8 +28,16 @@ const Language = () => {
         <Text>Choose your language</Text>
       </View>
       <View>
-        <Button title="FR" onPress={() => chooseLanguage('fr')} />
-        <Button title="EN" onPress={() => chooseLanguage('en')} />
+        <Button
+          title="FR"
+          disabled={locale === 'fr' ? true : false}
+          onPress={() => handleLocaleChange('fr')}
+        />
+        <Button
+          title="EN"
+          disabled={locale === 'en' ? true : false}
+          onPress={() => handleLocaleChange('en')}
+        />
       </View>
     </View>
   );

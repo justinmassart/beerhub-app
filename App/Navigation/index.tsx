@@ -1,13 +1,23 @@
 import React, {useEffect, useState} from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
-import LanguagePage from 'app/Pages/Language';
 import {NavigationContainer} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import HomeStack from 'app/Navigation/AppTab/HomeStack';
 import BeersStack from 'app/Navigation/AppTab/BeersStack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import LanguageStack from './AppTab/LanguageStack';
 
-const RootStack = createStackNavigator();
+export type RootNavigationType = {
+  App: undefined;
+  Home: undefined;
+  Hub: undefined;
+  Beers: undefined;
+  Places: undefined;
+  Profile: undefined;
+  Language: undefined;
+};
+
+const Tab = createBottomTabNavigator<RootNavigationType>();
 
 const Navigator = () => {
   const [initialRoute, setInitialRoute] = useState<'Home' | 'Language'>();
@@ -32,7 +42,7 @@ const Navigator = () => {
 
   return (
     <NavigationContainer>
-      <RootStack.Navigator
+      <Tab.Navigator
         initialRouteName={initialRoute}
         screenOptions={{
           // TODO: Remove detachPreviousScreen
@@ -42,10 +52,10 @@ const Navigator = () => {
           headerShown: false,
           presentation: 'modal',
         }}>
-        <RootStack.Screen name="Home" component={HomeStack} />
-        <RootStack.Screen name="Beers" component={BeersStack} />
-        <RootStack.Screen name="Language" component={LanguagePage} />
-      </RootStack.Navigator>
+        <Tab.Screen name="Home" component={HomeStack} />
+        <Tab.Screen name="Beers" component={BeersStack} />
+        <Tab.Screen name="Language" component={LanguageStack} />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 };
