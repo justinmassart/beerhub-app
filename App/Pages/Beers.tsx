@@ -5,7 +5,6 @@ import {useFocusEffect} from '@react-navigation/native'; // Import the useFocusE
 
 import GET_BEERS from 'app/Operations/queries/getBeers';
 import Text from 'app/Components/Atoms/Text';
-import i18n from 'app/Services/i18n';
 
 const Beers = () => {
   const [beers, setBeers] = useState(null);

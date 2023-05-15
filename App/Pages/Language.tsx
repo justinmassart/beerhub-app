@@ -1,13 +1,11 @@
 import React, {useState} from 'react';
 import {View, Button} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Text from 'app/Components/Atoms/Text';
 import i18n from 'app/Services/i18n';
 
 const Language = () => {
-  const {navigate} = useNavigation();
   const [locale, setLocale] = useState<string>(i18n.language);
 
   const handleLocaleChange = async (newLocale: string) => {
@@ -16,7 +14,6 @@ const Language = () => {
       i18n.changeLanguage(newLocale);
       setLocale(newLocale);
       await AsyncStorage.removeItem('beers');
-      navigate('Home');
     } catch (error) {
       console.log(error);
     }
