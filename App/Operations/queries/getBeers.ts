@@ -4,10 +4,13 @@ import Config from 'react-native-config';
 
 const {BACKEND_URL} = Config;
 
-const GET_BEERS = async () => {
+const GET_BEERS = async (pageCount?: number) => {
   const locale = i18n.language;
+  const pagination = pageCount ?? 1;
   try {
-    const response = await axios.get(`${BACKEND_URL}/${locale}/beers`);
+    const response = await axios.get(
+      `${BACKEND_URL}/${locale}/beers?page=${pagination}`,
+    );
     const data = response.data.beers;
     return data;
   } catch (error) {
