@@ -5,10 +5,9 @@ import {useTranslation} from 'react-i18next';
 
 import LanguagePage from 'app/Pages/Language';
 import HeaderTitle from 'app/Components/Molecules/Navigation/HeaderTitle';
-import Text from 'app/Components/Atoms/Text';
 
 export type LanguageNavigationType = {
-  Language: undefined;
+  language: undefined;
 };
 
 const LanguageStack = createStackNavigator<LanguageNavigationType>();
@@ -18,7 +17,7 @@ export default () => {
   return (
     <LanguageStack.Navigator>
       <LanguageStack.Screen
-        name="Language"
+        name="language"
         component={LanguagePage}
         options={{
           headerTitle: () => <HeaderTitle title={t('Language.title')} />,

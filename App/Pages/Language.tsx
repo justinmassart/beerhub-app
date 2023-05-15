@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 import {View, Button} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useTranslation} from 'react-i18next';
 
 import Text from 'app/Components/Atoms/Text';
 import i18n from 'app/Services/i18n';
 
 const Language = () => {
+  const {t} = useTranslation();
   const [locale, setLocale] = useState<string>(i18n.language);
 
   const handleLocaleChange = async (newLocale: string) => {
@@ -22,7 +24,7 @@ const Language = () => {
   return (
     <View>
       <View>
-        <Text>Choose your language</Text>
+        <Text>{t('Language.changeLanguage')}</Text>
       </View>
       <View>
         <Button
