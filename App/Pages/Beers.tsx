@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState, useCallback} from 'react';
 import {View, FlatList} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -16,7 +17,7 @@ const Beers = () => {
       const data = response.data;
       await AsyncStorage.setItem('beers', JSON.stringify(data));
       const beersFromStorage = await AsyncStorage.getItem('beers');
-      const parsedBeers = JSON.parse(beersFromStorage);
+      const parsedBeers = JSON.parse(beersFromStorage || '');
       setBeers(parsedBeers);
     } catch (error) {
       console.log(error);
