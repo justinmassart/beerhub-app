@@ -9,7 +9,7 @@ import HeaderTitle from 'app/Components/Molecules/Navigation/HeaderTitle';
 import Text from 'atoms/Text';
 
 export type BeersNavigationType = {
-  Beers: undefined;
+  beers: undefined;
 };
 
 const BeersStack = createStackNavigator<BeersNavigationType>();
@@ -26,7 +26,7 @@ export default () => {
         presentation: 'modal',
       }}>
       <BeersStack.Screen
-        name="Beers"
+        name="beers"
         component={BeersPage}
         options={{
           headerLeft: () => <Text />,

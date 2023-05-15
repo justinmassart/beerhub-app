@@ -8,7 +8,7 @@ import HeaderTitle from 'app/Components/Molecules/Navigation/HeaderTitle';
 import Text from 'app/Components/Atoms/Text';
 
 export type HomeNavigationType = {
-  Home: undefined;
+  home: undefined;
 };
 
 const HomeStack = createStackNavigator<HomeNavigationType>();
@@ -21,7 +21,7 @@ export default () => {
         headerLeft: () => <Text />,
       }}>
       <HomeStack.Screen
-        name="Home"
+        name="home"
         component={HomePage}
         options={{
           headerTitle: () => <HeaderTitle title={t('Home.title')} />,
