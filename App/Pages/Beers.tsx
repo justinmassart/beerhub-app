@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useCallback} from 'react';
-import {View, FlatList, TouchableOpacity, ScrollView} from 'react-native';
+import {View, FlatList, TouchableOpacity} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useFocusEffect} from '@react-navigation/native'; // Import the useFocusEffect hook
 
@@ -8,7 +8,7 @@ import GET_BEERS from 'app/Operations/queries/getBeers';
 import Text from 'app/Components/Atoms/Text';
 
 const Beers = () => {
-  const [beers, setBeers] = useState(null);
+  const [beers, setBeers] = useState<[] | null>(null);
   const [pagination, setPagination] = useState<number>(1);
   const [canLoadMore, setCanLoadMore] = useState<boolean>(true);
   const [lastPage, setLastPage] = useState<number | null>(null);
