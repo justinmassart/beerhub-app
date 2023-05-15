@@ -3,6 +3,7 @@
         "title": "Home"
     },
     "Language": {
-        "title": "Languages"
+        "title": "Languages",
+        "changeLanguage": "Change the language of the application"
     }
 }
