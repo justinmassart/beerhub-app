@@ -2,13 +2,13 @@
 import React, {useState, useCallback} from 'react';
 import {View, FlatList, TouchableOpacity} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useFocusEffect} from '@react-navigation/native'; // Import the useFocusEffect hook
+import {useFocusEffect} from '@react-navigation/native';
 
 import GET_BEERS from 'app/Operations/queries/getBeers';
 import Text from 'app/Components/Atoms/Text';
 
 const Beers = () => {
-  const [beers, setBeers] = useState<[] | null>(null);
+  const [beers, setBeers] = useState(null);
   const [pagination, setPagination] = useState<number>(1);
   const [canLoadMore, setCanLoadMore] = useState<boolean>(true);
   const [lastPage, setLastPage] = useState<number | null>(null);
@@ -25,11 +25,20 @@ const Beers = () => {
     try {
       const response = await GET_BEERS(pagination);
       setLastPage(response.last_page);
-      const data = response.data;
-      await AsyncStorage.setItem('beers', JSON.stringify(data));
+      const newBeers = response.data;
+
       const beersFromStorage = await AsyncStorage.getItem('beers');
-      const parsedBeers = JSON.parse(beersFromStorage || '');
-      setBeers(parsedBeers);
+      const existingBeers = JSON.parse(beersFromStorage || '[]');
+
+      const updatedBeers = [...existingBeers, ...newBeers];
+      const uniqueBeers: any = Array.from(
+        new Set(updatedBeers.map(beer => beer.id)),
+      ).map(id => {
+        return updatedBeers.find(beer => beer.id === id);
+      });
+
+      await AsyncStorage.setItem('beers', JSON.stringify(uniqueBeers));
+      setBeers(uniqueBeers);
     } catch (error) {
       console.log(error);
     }
