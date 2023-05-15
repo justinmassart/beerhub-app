@@ -1,5 +1,8 @@
 {
-  "Home": {
-    "title": "Tableau de bord"
-  }
+    "Home": {
+        "title": "Home"
+    },
+    "Language": {
+        "title": "Languages"
+    }
 }
