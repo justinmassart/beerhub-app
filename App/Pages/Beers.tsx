@@ -13,6 +13,10 @@ const Beers = () => {
   const [canLoadMore, setCanLoadMore] = useState<boolean>(true);
   const [lastPage, setLastPage] = useState<number | null>(null);
 
+  const resetPagination = () => {
+    setPagination(1);
+  };
+
   const handlePagination = () => {
     if (pagination + 1 === lastPage) {
       setCanLoadMore(false);
@@ -46,6 +50,7 @@ const Beers = () => {
 
   useFocusEffect(
     useCallback(() => {
+      resetPagination();
       fetchBeers();
     }, [fetchBeers]),
   );
