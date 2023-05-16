@@ -12,10 +12,14 @@ const Language = () => {
 
   const handleLocaleChange = async (newLocale: string) => {
     try {
+      await AsyncStorage.multiSet([
+        ['oldBeersLocale', locale],
+        ['oldPlacesLocale', locale],
+      ]);
       await AsyncStorage.setItem('locale', newLocale);
       i18n.changeLanguage(newLocale);
       setLocale(newLocale);
-      await AsyncStorage.removeItem('beers');
+      await AsyncStorage.multiRemove(['beers', 'places']);
     } catch (error) {
       console.log(error);
     }

@@ -13,7 +13,7 @@ const App = () => {
   const theme = getTheme(false);
   const clearAsyncStorage = async () => {
     try {
-      await AsyncStorage.removeItem('beers');
+      await AsyncStorage.multiRemove(['beers', 'places']);
       console.log('AsyncStorage cleared successfully.');
     } catch (error) {
       console.log('Error clearing AsyncStorage:', error);

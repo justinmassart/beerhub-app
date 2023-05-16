@@ -12,10 +12,17 @@ const Beers = () => {
   const [pagination, setPagination] = useState<number>(1);
   const [canLoadMore, setCanLoadMore] = useState<boolean>(true);
   const [lastPage, setLastPage] = useState<number | null>(null);
+  const [resetResults, setResetResults] = useState<boolean>(false);
 
-  const resetPagination = () => {
-    setPagination(1);
-  };
+  const resetPagination = useCallback(async () => {
+    const locales = await AsyncStorage.multiGet(['oldBeersLocale', 'locale']);
+    if (locales[0][1] && locales[1][1] && locales[0][1] !== locales[1][1]) {
+      await AsyncStorage.setItem('oldBeersLocale', locales[1][1]);
+      setResetResults(true);
+      setBeers(null);
+      setPagination(1);
+    }
+  }, []);
 
   const handlePagination = () => {
     if (pagination + 1 === lastPage) {
@@ -32,10 +39,12 @@ const Beers = () => {
       const newBeers = response.data;
 
       const beersFromStorage = await AsyncStorage.getItem('beers');
-      const existingBeers = JSON.parse(beersFromStorage || '[]');
+      const existingBeers = resetResults
+        ? []
+        : JSON.parse(beersFromStorage || '[]');
 
       const updatedBeers = [...existingBeers, ...newBeers];
-      const uniqueBeers: any = Array.from(
+      const uniqueBeers = Array.from(
         new Set(updatedBeers.map(beer => beer.id)),
       ).map(id => {
         return updatedBeers.find(beer => beer.id === id);
@@ -45,14 +54,18 @@ const Beers = () => {
       setBeers(uniqueBeers);
     } catch (error) {
       console.log(error);
+    } finally {
+      if (resetResults) {
+        setResetResults(false);
+      }
     }
-  }, [pagination]);
+  }, [pagination, resetResults]);
 
   useFocusEffect(
     useCallback(() => {
       resetPagination();
       fetchBeers();
-    }, [fetchBeers]),
+    }, [resetPagination, fetchBeers]),
   );
 
   const renderBeerItem = ({item}) => (
