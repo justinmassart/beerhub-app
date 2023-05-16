@@ -78,6 +78,8 @@ En tant qu'utilisateur inscris, je peux :
 
 - voir toutes les informations non privées sur les pages uniques des bières, lieux et utilisateurs.
 
+- utiliser une carte de style Google Maps afin de voir les bières / lieux / marques aux alentours.
+
 - faire une demande de découverte via la fonctionnalité prévue à cet effet.
 
 - modifier mes données dans mon profil.
