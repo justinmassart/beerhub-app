@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useCallback, useEffect} from 'react';
+import React, {useState, useCallback} from 'react';
 import {View, FlatList, TouchableOpacity} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useFocusEffect} from '@react-navigation/native';
@@ -8,7 +8,7 @@ import GET_PLACES from 'app/Operations/queries/getPlaces';
 import Text from 'app/Components/Atoms/Text';
 
 const Places = () => {
-  const [places, setPlaces] = useState(null);
+  const [places, setPlaces] = useState<any | null>(null);
   const [pagination, setPagination] = useState<number>(1);
   const [canLoadMore, setCanLoadMore] = useState<boolean>(true);
   const [lastPage, setLastPage] = useState<number | null>(null);

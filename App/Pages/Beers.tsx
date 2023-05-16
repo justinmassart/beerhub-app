@@ -8,7 +8,7 @@ import GET_BEERS from 'app/Operations/queries/getBeers';
 import Text from 'app/Components/Atoms/Text';
 
 const Beers = () => {
-  const [beers, setBeers] = useState(null);
+  const [beers, setBeers] = useState<any | null>(null);
   const [pagination, setPagination] = useState<number>(1);
   const [canLoadMore, setCanLoadMore] = useState<boolean>(true);
   const [lastPage, setLastPage] = useState<number | null>(null);
