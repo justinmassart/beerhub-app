@@ -1,8 +1,13 @@
 /* eslint-disable react/no-unstable-nested-components */
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import {
+  StackNavigationProp,
+  createStackNavigator,
+} from '@react-navigation/stack';
+import {RouteProp} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 
+import BeerPage from 'app/Pages/Beer';
 import BeersPage from 'app/Pages/Beers';
 import HeaderTitle from 'app/Components/Molecules/Navigation/HeaderTitle';
 
@@ -10,21 +15,22 @@ import Text from 'atoms/Text';
 
 export type BeersNavigationType = {
   beers: undefined;
+  beer: {
+    beer: {};
+  };
 };
+
+export type BeersStackNavigationProp = StackNavigationProp<BeersNavigationType>;
+
+export type DashboardStackRouteProp<T extends keyof BeersNavigationType> =
+  RouteProp<BeersNavigationType, T>;
 
 const BeersStack = createStackNavigator<BeersNavigationType>();
 
 export default () => {
   const {t} = useTranslation();
   return (
-    <BeersStack.Navigator
-      screenOptions={{
-        // TODO: Remove detachPreviousScreen
-        // https://github.com/react-navigation/react-navigation/issues/9891#issuecomment-916453157
-        detachPreviousScreen: false,
-        animationEnabled: false,
-        presentation: 'modal',
-      }}>
+    <BeersStack.Navigator>
       <BeersStack.Screen
         name="beers"
         component={BeersPage}
@@ -32,6 +38,17 @@ export default () => {
           headerLeft: () => <Text />,
           headerTitle: () => <HeaderTitle title={t('Beers.title')} />,
         }}
+      />
+      <BeersStack.Screen
+        name="beer"
+        component={BeerPage}
+        options={({route}) => ({
+          headerTitle: () => (
+            <HeaderTitle
+              title={(route.params?.beer as {name: string})?.name || 'BeerName'}
+            />
+          ),
+        })}
       />
     </BeersStack.Navigator>
   );
