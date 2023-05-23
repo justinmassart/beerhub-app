@@ -23,7 +23,7 @@ export type BrandsNavigationType = {
 export type BrandsStackNavigationProp =
   StackNavigationProp<BrandsNavigationType>;
 
-export type DashboardStackRouteProp<T extends keyof BrandsNavigationType> =
+export type BrandsStackRouteProp<T extends keyof BrandsNavigationType> =
   RouteProp<BrandsNavigationType, T>;
 
 const BrandsStack = createStackNavigator<BrandsNavigationType>();
