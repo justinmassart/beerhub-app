@@ -3,10 +3,13 @@ import {TouchableOpacity} from 'react-native';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import Text from 'app/Components/Atoms/Text';
 import View from 'app/Components/Atoms/View';
+import {RootStackNavigationProp} from 'app/Navigation';
+import {BeersStackNavigationProp} from 'app/Navigation/AppTab/BeersStack';
 
 const Beer = () => {
   const {params} = useRoute();
-  const navigation = useNavigation();
+  const {navigate} = useNavigation<RootStackNavigationProp>();
+  const {navigate: beerNavigation} = useNavigation<BeersStackNavigationProp>();
 
   return (
     <View>
@@ -14,9 +17,11 @@ const Beer = () => {
         <Text>{params?.beer?.name}</Text>
       </View>
       <View>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('Brands', {screen: 'brand'})}>
+        <TouchableOpacity onPress={() => navigate('Brands', {screen: 'brand'})}>
           <Text>Val-Dieu</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => beerNavigation('beerMap')}>
+          <Text>Où déguster ?</Text>
         </TouchableOpacity>
       </View>
     </View>
