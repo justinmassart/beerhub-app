@@ -9,6 +9,7 @@ import {useTranslation} from 'react-i18next';
 
 import BeerPage from 'app/Pages/Beer';
 import BeersPage from 'app/Pages/Beers';
+import BeerMapPage from 'app/Pages/BeerMap';
 import HeaderTitle from 'app/Components/Molecules/Navigation/HeaderTitle';
 
 import Text from 'atoms/Text';
@@ -18,6 +19,7 @@ export type BeersNavigationType = {
   beer: {
     beer: {};
   };
+  beerMap: undefined;
 };
 
 export type BeersStackNavigationProp = StackNavigationProp<BeersNavigationType>;
@@ -49,6 +51,13 @@ export default () => {
             />
           ),
         })}
+      />
+      <BeersStack.Screen
+        name="beerMap"
+        component={BeerMapPage}
+        options={{
+          headerTitle: () => <HeaderTitle title={t('Beers.title')} />,
+        }}
       />
     </BeersStack.Navigator>
   );
