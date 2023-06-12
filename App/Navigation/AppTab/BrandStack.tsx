@@ -4,8 +4,8 @@ import {
   StackNavigationProp,
   createStackNavigator,
 } from '@react-navigation/stack';
-import {RouteProp} from '@react-navigation/native';
-import {useTranslation} from 'react-i18next';
+import { RouteProp } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 
 import BrandPage from 'app/Pages/Brand';
 import BrandsPage from 'app/Pages/Brands';
@@ -15,8 +15,9 @@ import Text from 'atoms/Text';
 
 export type BrandsNavigationType = {
   brands: undefined;
-  brand?: {
-    brandId: {};
+  brand: {
+    brandId?: string;
+    brandName?: string;
   };
 };
 
@@ -29,7 +30,7 @@ export type BrandsStackRouteProp<T extends keyof BrandsNavigationType> =
 const BrandsStack = createStackNavigator<BrandsNavigationType>();
 
 export default () => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   return (
     <BrandsStack.Navigator>
       <BrandsStack.Screen
@@ -43,13 +44,9 @@ export default () => {
       <BrandsStack.Screen
         name="brand"
         component={BrandPage}
-        options={({route}) => ({
+        options={({ route }) => ({
           headerTitle: () => (
-            <HeaderTitle
-              title={
-                (route.params?.brand as {name: string})?.name || 'BrandName'
-              }
-            />
+            <HeaderTitle title={route.params?.brandName || 'BrandName'} />
           ),
         })}
       />
