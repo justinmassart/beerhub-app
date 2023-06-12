@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
-import {NavigationContainer, RouteProp} from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { NavigationContainer, RouteProp } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useTranslation} from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import AppTab from 'app/Navigation/AppTab';
 import {
@@ -15,6 +15,10 @@ export type RootNavigationType = {
   AppTab: undefined;
   Brands: {
     screen: 'brands' | 'brand';
+    params: {
+      brandId?: string;
+      brandName?: string;
+    };
   };
 };
 
@@ -28,7 +32,7 @@ export type RootStackRouteProp<T extends keyof RootNavigationType> = RouteProp<
 const RootStack = createStackNavigator<RootNavigationType>();
 
 const Navigator = () => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   //const [initialRoute, setInitialRoute] = useState<'Home' | 'Language'>();
 
   /*   useEffect(() => {
@@ -61,7 +65,13 @@ const Navigator = () => {
           headerShown: false,
         }}>
         <RootStack.Screen name="AppTab" component={AppTab} />
-        <RootStack.Screen name="Brands" component={BrandsStack} />
+        <RootStack.Screen
+          name="Brands"
+          component={BrandsStack}
+          initialParams={{
+            params: { brandId: undefined, brandName: undefined },
+          }}
+        />
       </RootStack.Navigator>
     </NavigationContainer>
   );
