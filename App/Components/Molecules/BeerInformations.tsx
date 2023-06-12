@@ -2,7 +2,6 @@ import React from 'react';
 import BeerInformationsItem from 'app/Components/Molecules/BeerInformationsItem';
 
 const BeerInformations = ({ beer }: { beer: any }) => {
-  console.log(beer);
   const availableVolumes = JSON.parse(beer.volume_available).join(', ');
   const aromas = JSON.parse(beer.aromas).join(', ');
   const availableContainers = JSON.parse(beer.container_available);
