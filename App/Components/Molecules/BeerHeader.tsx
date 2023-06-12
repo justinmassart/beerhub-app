@@ -31,13 +31,21 @@ const BeerHeader = ({ beer }: { beer: any }) => {
         </View>
         <View>
           <TouchableOpacity
-            onPress={() => navigate('Brands', { screen: 'brand' })}>
+            onPress={() =>
+              navigate('Brands', {
+                screen: 'brand',
+                params: {
+                  brandId: beer.brand.brand.id,
+                  brandName: beer.brand.brand.name,
+                },
+              })
+            }>
             <Text>See the brewer</Text>
           </TouchableOpacity>
         </View>
         <View>
           <TouchableOpacity onPress={() => beerNavigation('beerMap')}>
-            <Text>Où déguster ?</Text>
+            <Text>Where to enjoy ?</Text>
           </TouchableOpacity>
         </View>
         <View
