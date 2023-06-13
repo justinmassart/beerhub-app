@@ -4,8 +4,8 @@ import {
   StackNavigationProp,
   createStackNavigator,
 } from '@react-navigation/stack';
-import {RouteProp} from '@react-navigation/native';
-import {useTranslation} from 'react-i18next';
+import { RouteProp } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 
 import BeerPage from 'app/Pages/Beer';
 import BeersPage from 'app/Pages/Beers';
@@ -30,7 +30,7 @@ export type DashboardStackRouteProp<T extends keyof BeersNavigationType> =
 const BeersStack = createStackNavigator<BeersNavigationType>();
 
 export default () => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   return (
     <BeersStack.Navigator>
       <BeersStack.Screen
@@ -44,10 +44,12 @@ export default () => {
       <BeersStack.Screen
         name="beer"
         component={BeerPage}
-        options={({route}) => ({
+        options={({ route }) => ({
           headerTitle: () => (
             <HeaderTitle
-              title={(route.params?.beer as {name: string})?.name || 'BeerName'}
+              title={
+                (route.params?.beer as { name: string })?.name || 'BeerName'
+              }
             />
           ),
         })}
@@ -56,7 +58,7 @@ export default () => {
         name="beerMap"
         component={BeerMapPage}
         options={{
-          headerTitle: () => <HeaderTitle title={t('Beers.title')} />,
+          headerTitle: () => <HeaderTitle title={t('BeerMap.title')} />,
         }}
       />
     </BeersStack.Navigator>

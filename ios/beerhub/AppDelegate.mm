@@ -1,4 +1,5 @@
 #import "AppDelegate.h"
+#import <GoogleMaps/GoogleMaps.h>
 
 #import <React/RCTBundleURLProvider.h>
 
@@ -6,6 +7,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [GMSServices provideAPIKey:@"_AIzaSyAZBSuuJJKULzj_qBkFg6KP4yM7D9Y3dpc_"]; // add this line using the api key obtained from Google Console
   self.moduleName = @"beerhub";
   // You can add your custom initial props in the dictionary below.
   // They will be passed down to the ViewController used by React Native.

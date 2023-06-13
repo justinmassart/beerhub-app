@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useRoute, RouteProp, ParamListBase } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 import Text from 'app/Components/Atoms/Text';
 import View from 'app/Components/Atoms/View';
 import GET_BRAND from 'app/Operations/queries/getBrand';
@@ -25,10 +25,9 @@ const Brand = () => {
     const { brandId } = params as RouteParams;
     if (brandId) {
       getBrand(brandId);
+      console.log(brand);
     }
   }, [params]);
-
-  console.log(brand[0]);
 
   return (
     <View>
