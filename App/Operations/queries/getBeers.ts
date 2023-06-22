@@ -2,7 +2,7 @@ import i18n from 'app/Services/i18n';
 import axios from 'axios';
 import Config from 'react-native-config';
 
-const {BACKEND_URL} = Config;
+const { BACKEND_URL } = Config;
 
 const GET_BEERS = async (pageCount?: number) => {
   const locale = i18n.language;
