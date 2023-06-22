@@ -2,6 +2,12 @@ import React from 'react';
 import Text from 'app/Components/Atoms/Text';
 import View from 'app/Components/Atoms/View';
 import MapView from 'react-native-maps';
+import { enableLatestRenderer } from 'react-native-maps';
+import { Platform } from 'react-native';
+
+if (Platform.OS === 'android') {
+  enableLatestRenderer();
+}
 
 const Beer = () => {
   return (
@@ -9,15 +15,17 @@ const Beer = () => {
       <View>
         <Text>Carte</Text>
       </View>
-      <MapView
-        style={{ flex: 1 }}
-        initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
-      />
+      <View flex={1}>
+        <MapView
+          style={{ flex: 1 }}
+          initialRegion={{
+            latitude: 37.78825,
+            longitude: -122.4324,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+        />
+      </View>
     </View>
   );
 };
