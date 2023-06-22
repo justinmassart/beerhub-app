@@ -36,7 +36,9 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string>Your location is needed to show relevant information on the map.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Your location is needed to show relevant information on the map.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Alegreya-Black.ttf</string>

@@ -2,7 +2,7 @@ import React from 'react';
 import Text from 'app/Components/Atoms/Text';
 import View from 'app/Components/Atoms/View';
 import MapView from 'react-native-maps';
-import { enableLatestRenderer } from 'react-native-maps';
+import { enableLatestRenderer, PROVIDER_GOOGLE } from 'react-native-maps';
 import { Platform } from 'react-native';
 
 if (Platform.OS === 'android') {
@@ -17,6 +17,7 @@ const Beer = () => {
       </View>
       <View flex={1}>
         <MapView
+          provider={PROVIDER_GOOGLE}
           style={{ flex: 1 }}
           initialRegion={{
             latitude: 37.78825,
