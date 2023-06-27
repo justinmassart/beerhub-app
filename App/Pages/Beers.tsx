@@ -1,15 +1,16 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useCallback} from 'react';
-import {View, FlatList, TouchableOpacity} from 'react-native';
+import React, { useState, useCallback } from 'react';
+import { View, FlatList, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 import GET_BEERS from 'app/Operations/queries/getBeers';
 import Text from 'app/Components/Atoms/Text';
-import {BeersStackNavigationProp} from 'app/Navigation/AppTab/BeersStack';
+import { BeersStackNavigationProp } from 'app/Navigation/AppTab/BeersStack';
+import BeerItem from 'app/Components/Molecules/BeerItem';
 
 const Beers = () => {
-  const {navigate} = useNavigation<BeersStackNavigationProp>();
+  const { navigate } = useNavigation<BeersStackNavigationProp>();
   const [beers, setBeers] = useState<any | null>(null);
   const [pagination, setPagination] = useState<number>(1);
   const [canLoadMore, setCanLoadMore] = useState<boolean>(true);
@@ -70,14 +71,7 @@ const Beers = () => {
     }, [resetPagination, fetchBeers]),
   );
 
-  const renderBeerItem = ({item}) => (
-    <TouchableOpacity onPress={() => navigate('beer', {beer: item})}>
-      <Text>{item?.name}</Text>
-      <Text>{item?.translations[0]?.description}</Text>
-      <Text>{item?.brand?.name}</Text>
-      <View style={{minHeight: 25}} />
-    </TouchableOpacity>
-  );
+  const renderBeerItem = ({ item }) => <BeerItem beer={item} />;
 
   return (
     <View>
