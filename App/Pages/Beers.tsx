@@ -1,9 +1,10 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useState, useCallback } from 'react';
-import { View, FlatList, TouchableOpacity } from 'react-native';
+import { FlatList, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
+import View from 'app/Components/Atoms/View';
 import GET_BEERS from 'app/Operations/queries/getBeers';
 import Text from 'app/Components/Atoms/Text';
 import { BeersStackNavigationProp } from 'app/Navigation/AppTab/BeersStack';
@@ -74,11 +75,12 @@ const Beers = () => {
   const renderBeerItem = ({ item }) => <BeerItem beer={item} />;
 
   return (
-    <View>
+    <View noPaddingVertical>
       <FlatList
         data={beers}
         renderItem={renderBeerItem}
         keyExtractor={item => item.id.toString()}
+        showsVerticalScrollIndicator={false}
         ListFooterComponent={
           <>
             {canLoadMore ? (
