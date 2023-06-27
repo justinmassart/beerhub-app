@@ -1,17 +1,14 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, { useState, useCallback } from 'react';
 import { FlatList, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 
-import View from 'app/Components/Atoms/View';
+import PageContainer from 'app/Components/Atoms/PageContainer';
 import GET_BEERS from 'app/Operations/queries/getBeers';
 import Text from 'app/Components/Atoms/Text';
-import { BeersStackNavigationProp } from 'app/Navigation/AppTab/BeersStack';
 import BeerItem from 'app/Components/Molecules/BeerItem';
 
 const Beers = () => {
-  const { navigate } = useNavigation<BeersStackNavigationProp>();
   const [beers, setBeers] = useState<any | null>(null);
   const [pagination, setPagination] = useState<number>(1);
   const [canLoadMore, setCanLoadMore] = useState<boolean>(true);
@@ -75,7 +72,7 @@ const Beers = () => {
   const renderBeerItem = ({ item }) => <BeerItem beer={item} />;
 
   return (
-    <View noPaddingVertical>
+    <PageContainer>
       <FlatList
         data={beers}
         renderItem={renderBeerItem}
@@ -94,12 +91,12 @@ const Beers = () => {
                 <Text>Load More</Text>
               </TouchableOpacity>
             ) : (
-              <></>
+              <Text>There is no more beers to load</Text>
             )}
           </>
         }
       />
-    </View>
+    </PageContainer>
   );
 };
 

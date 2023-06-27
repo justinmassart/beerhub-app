@@ -1,23 +1,34 @@
 import React from 'react';
 import { View } from 'react-native';
 
-const Box = ({ style, shadow, color, radius, ...props }) => {
+import { Platform } from 'react-native';
+
+const Box = ({ style = {}, shadow = true, color, radius, ...props }) => {
   const shadowStyle = shadow
-    ? {
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.3,
-        shadowRadius: 2,
-        elevation: 2,
-      }
+    ? Platform.select({
+        ios: {
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: 10 },
+          shadowOpacity: 0.05,
+          shadowRadius: 5,
+        },
+        android: {
+          elevation: 10,
+        },
+        default: {},
+      })
     : {};
 
   const boxStyle = {
-    backgroundColor: color || 'transparent',
-    borderRadius: radius || 0,
+    backgroundColor: color || 'white',
+    borderRadius: radius || 10,
   };
 
-  return <View style={[boxStyle, shadowStyle, style]} {...props} />;
+  return (
+    <View style={[boxStyle, shadowStyle, style]}>
+      <View {...props}></View>
+    </View>
+  );
 };
 
 export default Box;
