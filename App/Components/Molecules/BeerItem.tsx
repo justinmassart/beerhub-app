@@ -9,16 +9,13 @@ const BeerItem = ({ beer }: { beer: any }) => {
   const { navigate } = useNavigation<BeersStackNavigationProp>();
 
   return (
-    <Box
-      color={undefined}
-      radius={undefined}
-      style={{ marginBottom: 16, marginTop: 16 }}>
-      <TouchableOpacity onPress={() => navigate('beer', { beer: beer })}>
+    <TouchableOpacity onPress={() => navigate('beer', { beer: beer })}>
+      <Box color={undefined} radius={undefined} style={{ marginTop: 32 }}>
         <Text>{beer?.name}</Text>
         <Text>{beer?.translations[0]?.description}</Text>
         <Text>{beer?.brand?.brand?.name}</Text>
-      </TouchableOpacity>
-    </Box>
+      </Box>
+    </TouchableOpacity>
   );
 };
 

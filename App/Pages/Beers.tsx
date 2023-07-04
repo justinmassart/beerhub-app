@@ -83,7 +83,6 @@ const Beers = () => {
             {canLoadMore ? (
               <TouchableOpacity
                 style={{
-                  padding: 20,
                   alignItems: 'center',
                   backgroundColor: '#DDDDDD',
                 }}
