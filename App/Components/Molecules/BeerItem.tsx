@@ -16,22 +16,35 @@ const BeerItem = ({ beer }: { beer: any }) => {
   return (
     <TouchableOpacity onPress={() => navigate('beer', { beer: beer })}>
       <Box color={undefined} radius={undefined} style={{ marginTop: 32 }}>
-        <View noPadding>
-          <Text>{beer?.brand?.brand?.name}</Text>
-          <Text>{beer?.name}</Text>
-          <Text>{beer?.type}</Text>
-          <Text>{aromas.join(', ')}</Text>
-          <Text>
-            {beer?.volume +
-              ' cl - ' +
-              beer?.abv +
-              '% ABV - ' +
-              beer?.ibu +
-              ' IBU'}
-          </Text>
+        <View noPadding isHorizontal>
+          <View noPadding flex={3}>
+            <Text>{beer?.brand?.brand?.name}</Text>
+            <Text>{beer?.name}</Text>
+            <Text>{beer?.type}</Text>
+            <Text>{aromas.join(', ')}</Text>
+            <Text>
+              {33 + ' cl - ' + beer?.abv + '% ABV - ' + beer?.ibu + ' IBU'}
+            </Text>
+          </View>
+          <View noPadding flex={2}>
+            <Icon name="beer-outline" size={150} color="#249" />
+          </View>
         </View>
-        <View noPadding>
-          <Icon name="heart" size={20} color="#249" />
+        <View
+          noPadding
+          isHorizontal
+          alignItems="center"
+          justifyContent="space-between"
+          style={{ maxWidth: '60%' }}>
+          <TouchableOpacity onPress={() => console.log('Favorite')}>
+            <Icon name="heart-outline" size={40} color="#000" />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => console.log('Comment')}>
+            <Icon name="chatbox-ellipses-outline" size={40} color="#000" />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => console.log('Share')}>
+            <Icon name="share-outline" size={40} color="#000" />
+          </TouchableOpacity>
         </View>
       </Box>
     </TouchableOpacity>
