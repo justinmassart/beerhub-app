@@ -6,16 +6,27 @@ import { useNavigation } from '@react-navigation/native';
 import { BeersStackNavigationProp } from 'app/Navigation/AppTab/BeersStack';
 import Box from 'app/Components/Atoms/Box';
 import Icon from 'react-native-vector-icons/Ionicons';
+import BeerRating from './BeerRating';
 
 const BeerItem = ({ beer }: { beer: any }) => {
   const { navigate } = useNavigation<BeersStackNavigationProp>();
   const aromas = JSON.parse(beer?.aromas);
+  const averageRating = beer?.ratings?.average_rating || 0;
+  const totalRater = beer?.ratings?.total_rater || 0;
 
-  console.log(beer);
+  console.log(beer?.brand);
 
   return (
     <TouchableOpacity onPress={() => navigate('beer', { beer: beer })}>
       <Box color={undefined} radius={undefined} style={{ marginTop: 32 }}>
+        <View
+          noPadding
+          isHorizontal
+          justifyContent="space-between"
+          style={{ maxWidth: '55%' }}>
+          <BeerRating rating={averageRating} />
+          <Text>{totalRater} votes</Text>
+        </View>
         <View noPadding isHorizontal>
           <View noPadding flex={3}>
             <Text>{beer?.brand?.brand?.name}</Text>
@@ -25,6 +36,7 @@ const BeerItem = ({ beer }: { beer: any }) => {
             <Text>
               {33 + ' cl - ' + beer?.abv + '% ABV - ' + beer?.ibu + ' IBU'}
             </Text>
+            <Text>{beer?.brand?.brand?.address}</Text>
           </View>
           <View noPadding flex={2}>
             <Icon name="beer-outline" size={150} color="#249" />
