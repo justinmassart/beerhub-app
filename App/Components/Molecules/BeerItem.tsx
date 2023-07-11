@@ -14,8 +14,6 @@ const BeerItem = ({ beer }: { beer: any }) => {
   const averageRating = beer?.ratings?.average_rating || 0;
   const totalRater = beer?.ratings?.total_rater || 0;
 
-  console.log(beer?.brand);
-
   return (
     <TouchableOpacity onPress={() => navigate('beer', { beer: beer })}>
       <Box color={undefined} radius={undefined} style={{ marginTop: 32 }}>
