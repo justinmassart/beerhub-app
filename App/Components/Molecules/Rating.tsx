@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const BeerRating = ({ rating }) => {
+const Rating = ({ rating }) => {
   const filledSymbols = Math.floor(rating);
   const hasHalfSymbol = rating - filledSymbols >= 0.5;
 
@@ -40,4 +40,4 @@ const BeerRating = ({ rating }) => {
   );
 };
 
-export default BeerRating;
+export default Rating;
