@@ -24,7 +24,7 @@ export type BeersNavigationType = {
 
 export type BeersStackNavigationProp = StackNavigationProp<BeersNavigationType>;
 
-export type DashboardStackRouteProp<T extends keyof BeersNavigationType> =
+export type BeersStackRouteProp<T extends keyof BeersNavigationType> =
   RouteProp<BeersNavigationType, T>;
 
 const BeersStack = createStackNavigator<BeersNavigationType>();
