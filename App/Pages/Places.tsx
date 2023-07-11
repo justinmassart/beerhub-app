@@ -1,11 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useCallback} from 'react';
-import {View, FlatList, TouchableOpacity} from 'react-native';
+import React, { useState, useCallback } from 'react';
+import { View, FlatList, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useFocusEffect} from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 
 import GET_PLACES from 'app/Operations/queries/getPlaces';
 import Text from 'app/Components/Atoms/Text';
+import PageContainer from 'app/Components/Atoms/PageContainer';
+import PlaceItem from 'app/Components/Molecules/PlaceItem';
 
 const Places = () => {
   const [places, setPlaces] = useState<any | null>(null);
@@ -68,26 +70,20 @@ const Places = () => {
     }, [resetPagination, fetchPlaces]),
   );
 
-  const renderPlaceItem = ({item}) => (
-    <View>
-      <Text>{item?.name}</Text>
-      <Text>{item?.translations[0]?.description}</Text>
-      <View style={{minHeight: 25}} />
-    </View>
-  );
+  const renderPlaceItem = ({ item }) => <PlaceItem place={item} />;
 
   return (
-    <View>
+    <PageContainer>
       <FlatList
         data={places}
         renderItem={renderPlaceItem}
         keyExtractor={item => item.id.toString()}
+        showsVerticalScrollIndicator={false}
         ListFooterComponent={
           <>
             {canLoadMore ? (
               <TouchableOpacity
                 style={{
-                  padding: 20,
                   alignItems: 'center',
                   backgroundColor: '#DDDDDD',
                 }}
@@ -95,12 +91,12 @@ const Places = () => {
                 <Text>Load More</Text>
               </TouchableOpacity>
             ) : (
-              <></>
+              <Text>There is no more places to load</Text>
             )}
           </>
         }
       />
-    </View>
+    </PageContainer>
   );
 };
 
