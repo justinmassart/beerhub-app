@@ -1,11 +1,12 @@
-/* eslint-disable react-native/no-inline-styles */
-import React, {useState, useCallback} from 'react';
-import {View, FlatList, TouchableOpacity} from 'react-native';
+import React, { useState, useCallback } from 'react';
+import { FlatList, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useFocusEffect} from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 
+import PageContainer from 'app/Components/Atoms/PageContainer';
 import GET_BEERS from 'app/Operations/queries/getBeers';
 import Text from 'app/Components/Atoms/Text';
+import BeerItem from 'app/Components/Molecules/BeerItem';
 
 const Beers = () => {
   const [beers, setBeers] = useState<any | null>(null);
@@ -68,27 +69,20 @@ const Beers = () => {
     }, [resetPagination, fetchBeers]),
   );
 
-  const renderBeerItem = ({item}) => (
-    <View>
-      <Text>{item?.name}</Text>
-      <Text>{item?.translations[0]?.description}</Text>
-      <Text>{item?.brand?.name}</Text>
-      <View style={{minHeight: 25}} />
-    </View>
-  );
+  const renderBeerItem = ({ item }) => <BeerItem beer={item} />;
 
   return (
-    <View>
+    <PageContainer>
       <FlatList
         data={beers}
         renderItem={renderBeerItem}
         keyExtractor={item => item.id.toString()}
+        showsVerticalScrollIndicator={false}
         ListFooterComponent={
           <>
             {canLoadMore ? (
               <TouchableOpacity
                 style={{
-                  padding: 20,
                   alignItems: 'center',
                   backgroundColor: '#DDDDDD',
                 }}
@@ -96,12 +90,12 @@ const Beers = () => {
                 <Text>Load More</Text>
               </TouchableOpacity>
             ) : (
-              <></>
+              <Text>There is no more beers to load</Text>
             )}
           </>
         }
       />
-    </View>
+    </PageContainer>
   );
 };
 

@@ -1,31 +1,41 @@
-import React, {useEffect, useState} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { NavigationContainer, RouteProp } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useTranslation} from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
-import HubStack from 'app/Navigation/AppTab/HubStack';
-import HomeStack from 'app/Navigation/AppTab/HomeStack';
-import BeersStack from 'app/Navigation/AppTab/BeersStack';
-import PlacesStack from 'app/Navigation/AppTab/PlacesStack';
-import ProfileStack from 'app/Navigation/AppTab/ProfileStack';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import AppTab from 'app/Navigation/AppTab';
+import {
+  StackNavigationProp,
+  createStackNavigator,
+} from '@react-navigation/stack';
+
+import BrandsStack from 'app/Navigation/AppTab/BrandStack';
 
 export type RootNavigationType = {
-  App: undefined;
-  Home: undefined;
-  Hub: undefined;
-  Beers: undefined;
-  Places: undefined;
-  Profile: undefined;
+  AppTab: undefined;
+  Brands: {
+    screen: 'brands' | 'brand';
+    params: {
+      brandId?: string;
+      brandName?: string;
+    };
+  };
 };
 
-const Tab = createBottomTabNavigator<RootNavigationType>();
+export type RootStackNavigationProp = StackNavigationProp<RootNavigationType>;
+
+export type RootStackRouteProp<T extends keyof RootNavigationType> = RouteProp<
+  RootNavigationType,
+  T
+>;
+
+const RootStack = createStackNavigator<RootNavigationType>();
 
 const Navigator = () => {
-  const {t} = useTranslation();
-  const [initialRoute, setInitialRoute] = useState<'Home' | 'Language'>();
+  const { t } = useTranslation();
+  //const [initialRoute, setInitialRoute] = useState<'Home' | 'Language'>();
 
-  useEffect(() => {
+  /*   useEffect(() => {
     const checkStoredLocale = async () => {
       const storedLocale = await AsyncStorage.getItem('locale');
 
@@ -41,46 +51,28 @@ const Navigator = () => {
 
   if (initialRoute === undefined) {
     return null;
-  }
+  } */
 
   return (
     <NavigationContainer>
-      <Tab.Navigator
-        initialRouteName={'Home'}
+      <RootStack.Navigator
+        initialRouteName="AppTab"
         screenOptions={{
           // TODO: Remove detachPreviousScreen
           // https://github.com/react-navigation/react-navigation/issues/9891#issuecomment-916453157
           detachPreviousScreen: false,
-          animationEnabled: false,
+          animationEnabled: true,
           headerShown: false,
-          presentation: 'modal',
         }}>
-        <Tab.Screen
-          name="Hub"
-          component={HubStack}
-          options={{title: t('Hub.title') || 'Hub'}}
+        <RootStack.Screen name="AppTab" component={AppTab} />
+        <RootStack.Screen
+          name="Brands"
+          component={BrandsStack}
+          initialParams={{
+            params: { brandId: undefined, brandName: undefined },
+          }}
         />
-        <Tab.Screen
-          name="Beers"
-          component={BeersStack}
-          options={{title: t('Beers.title') || 'Beers'}}
-        />
-        <Tab.Screen
-          name="Home"
-          component={HomeStack}
-          options={{title: t('Home.title') || 'Home'}}
-        />
-        <Tab.Screen
-          name="Places"
-          component={PlacesStack}
-          options={{title: t('Places.title') || 'Places'}}
-        />
-        <Tab.Screen
-          name="Profile"
-          component={ProfileStack}
-          options={{title: t('Profile.title') || 'Profile'}}
-        />
-      </Tab.Navigator>
+      </RootStack.Navigator>
     </NavigationContainer>
   );
 };

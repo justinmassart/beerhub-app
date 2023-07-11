@@ -1,0 +1,41 @@
+{
+  "root": true,
+  "extends": "@react-native-community",
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "eslint-plugin-module-resolver",
+    "@typescript-eslint"
+  ],
+  "ignorePatterns": "e2e",
+  "settings": {
+    "import/resolver": {
+      "babel-module": {
+        "alias": {
+          "app": "./App",
+          "atoms": "./App/Components/Atoms",
+          "molecules": "./App/Components/Molecules",
+          "layouts": "./App/Components/Layouts",
+          "pages": "./App/Pages",
+          "containers": "./App/Containers",
+          "images": "./App/Images",
+          "themes": "./App/Themes",
+          "navigation": "./App/Navigation",
+          "config": "./App/Config",
+          "types": "./App/Types"
+        }
+      }
+    }
+  },
+  "rules": {
+    "module-resolver/use-alias": 2,
+    "no-spaced-func": 0,
+    "eslint-comments/no-unlimited-disable": 0,
+    "prettier/prettier": 0,
+    "@typescript-eslint/no-unused-vars": [
+      1,
+      {
+        "varsIgnorePattern": "^_"
+      }
+    ]
+  }
+}

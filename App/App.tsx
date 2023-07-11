@@ -1,11 +1,11 @@
-import React, {useEffect} from 'react';
-import {AppState, AppStateStatus} from 'react-native';
+import React, { useEffect } from 'react';
+import { AppState, AppStateStatus } from 'react-native';
 import AppLifecycleProvider from './Providers/AppLifeycleProvider';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {ThemeProvider} from 'styled-components';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { ThemeProvider } from 'styled-components';
 import I18nProvider from './Providers/I18nProvider';
-import {AnchorProvider} from '@nandorojo/anchor';
-import {getTheme} from './Themes';
+import { AnchorProvider } from '@nandorojo/anchor';
+import { getTheme } from './Themes';
 import Navigation from './Navigation/index';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
