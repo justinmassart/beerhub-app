@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { BeersStackNavigationProp } from 'app/Navigation/AppTab/BeersStack';
 import Box from 'app/Components/Atoms/Box';
 import Icon from 'react-native-vector-icons/Ionicons';
-import BeerRating from './BeerRating';
+import Rating from './Rating';
 
 const BeerItem = ({ beer }: { beer: any }) => {
   const { navigate } = useNavigation<BeersStackNavigationProp>();
@@ -24,7 +24,7 @@ const BeerItem = ({ beer }: { beer: any }) => {
           isHorizontal
           justifyContent="space-between"
           style={{ maxWidth: '55%' }}>
-          <BeerRating rating={averageRating} />
+          <Rating rating={averageRating} />
           <Text>{totalRater} votes</Text>
         </View>
         <View noPadding isHorizontal>
