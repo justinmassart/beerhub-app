@@ -4,18 +4,22 @@ import {
   StackNavigationProp,
   createStackNavigator,
 } from '@react-navigation/stack';
-import {useTranslation} from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import ProfilePage from 'app/Pages/Profile';
 import SettingsPage from 'app/Pages/Settings';
 import LanguagePage from 'app/Pages/Language';
+import LoginPage from 'app/Pages/Login';
+import SignUpPage from 'app/Pages/SignUp';
 import HeaderTitle from 'app/Components/Molecules/Navigation/HeaderTitle';
-import {RouteProp} from '@react-navigation/native';
+import { RouteProp } from '@react-navigation/native';
 
 export type ProfileNavigationType = {
-  profile: undefined;
+  Profile: undefined;
   Settings: undefined;
   Language: undefined;
+  Login: undefined;
+  SignUp: undefined;
 };
 
 export type ProfileStackNavigationProp =
@@ -27,11 +31,11 @@ export type DashboardStackRouteProp<T extends keyof ProfileNavigationType> =
 const ProfileStack = createStackNavigator<ProfileNavigationType>();
 
 export default () => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   return (
     <ProfileStack.Navigator>
       <ProfileStack.Screen
-        name="profile"
+        name="Profile"
         component={ProfilePage}
         options={{
           headerTitle: () => <HeaderTitle title={t('Profile.title')} />,
@@ -49,6 +53,20 @@ export default () => {
         component={LanguagePage}
         options={{
           headerTitle: () => <HeaderTitle title={t('Language.title')} />,
+        }}
+      />
+      <ProfileStack.Screen
+        name="Login"
+        component={LoginPage}
+        options={{
+          headerTitle: () => <HeaderTitle title={t('Login.title')} />,
+        }}
+      />
+      <ProfileStack.Screen
+        name="SignUp"
+        component={SignUpPage}
+        options={{
+          headerTitle: () => <HeaderTitle title={t('SignUp.title')} />,
         }}
       />
     </ProfileStack.Navigator>
