@@ -15,7 +15,7 @@ export type AppTabNavigationType = {
   Hub: undefined;
   Beers: undefined;
   Places: undefined;
-  Profile: undefined;
+  MyProfile: undefined;
 };
 
 const Tab = createBottomTabNavigator<AppTabNavigationType>();
@@ -47,7 +47,7 @@ export default () => {
         options={{ title: t('Places.title') || 'Places' }}
       />
       <Tab.Screen
-        name="Profile"
+        name="MyProfile"
         component={ProfileStack}
         options={{ title: t('Profile.title') || 'Profile' }}
       />
