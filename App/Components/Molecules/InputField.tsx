@@ -44,9 +44,14 @@ const InputField: React.FC<InputFieldProps> = ({ type, ...rest }) => {
     <Box color={undefined} radius={undefined}>
       <TextInput
         autoCorrect={false}
+        autoCapitalize={
+          type === 'email' || type === 'password' ? 'none' : 'words'
+        }
         style={styles.input}
         keyboardType={getKeyboardType()}
         secureTextEntry={secureTextEntry}
+        value={rest.value}
+        onChangeText={rest.onChangeText}
       />
     </Box>
   );
