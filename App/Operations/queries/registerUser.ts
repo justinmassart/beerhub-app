@@ -5,8 +5,8 @@ import Config from 'react-native-config';
 const { BACKEND_URL } = Config;
 
 const REGISTER_USER = async (formData: {
-  first_name: string;
-  last_name: string;
+  firstname: string;
+  lastname: string;
   username: string;
   email: string;
   country: string;
@@ -17,8 +17,8 @@ const REGISTER_USER = async (formData: {
 
   const isFormDataValid = formData => {
     const {
-      first_name,
-      last_name,
+      firstname,
+      lastname,
       username,
       email,
       country,
@@ -27,8 +27,8 @@ const REGISTER_USER = async (formData: {
     } = formData;
 
     if (
-      !first_name ||
-      !last_name ||
+      !firstname ||
+      !lastname ||
       !username ||
       !email ||
       !country ||
@@ -39,8 +39,8 @@ const REGISTER_USER = async (formData: {
     }
 
     if (
-      typeof first_name !== 'string' ||
-      typeof last_name !== 'string' ||
+      typeof firstname !== 'string' ||
+      typeof lastname !== 'string' ||
       typeof username !== 'string' ||
       typeof email !== 'string' ||
       typeof country !== 'string' ||
@@ -56,7 +56,7 @@ const REGISTER_USER = async (formData: {
   if (isFormDataValid(formData)) {
     try {
       const response = await axios.post(
-        `${BACKEND_URL}/${locale}/register`,
+        `${BACKEND_URL}/users/register`,
         formData,
       );
       return response;

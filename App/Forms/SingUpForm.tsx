@@ -12,8 +12,8 @@ import availableCountries from 'app/Helpers/availableCountries';
 const SignUpForm = () => {
   const [isFormComplete, setIsFormComplete] = useState<boolean>(false);
   const [formData, setFormData] = useState({
-    first_name: '',
-    last_name: '',
+    firstname: '',
+    lastname: '',
     username: '',
     email: '',
     country: '',
@@ -23,7 +23,8 @@ const SignUpForm = () => {
 
   const handleSubmit = async () => {
     try {
-      await REGISTER_USER(formData);
+      const response = await REGISTER_USER(formData);
+      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -38,8 +39,8 @@ const SignUpForm = () => {
       formData.username.length >= 2 &&
       formData.username.length <= 24 &&
       formData.confirm_password === formData.password &&
-      /^^[A-Za-z-]+$/.test(formData.first_name) &&
-      /^^[A-Za-z-]+$/.test(formData.last_name) &&
+      /^^[A-Za-z-]+$/.test(formData.firstname) &&
+      /^^[A-Za-z-]+$/.test(formData.lastname) &&
       /^[a-zA-Z0-9]+$/.test(formData.username) &&
       /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
     setIsFormComplete(isFormValid);
@@ -54,18 +55,16 @@ const SignUpForm = () => {
         <Text>First name</Text>
         <InputField
           type="text"
-          value={formData.first_name}
-          onChangeText={value =>
-            setFormData({ ...formData, first_name: value })
-          }
+          value={formData.firstname}
+          onChangeText={value => setFormData({ ...formData, firstname: value })}
         />
       </View>
       <View noPaddingHorizontal>
         <Text>Last name</Text>
         <InputField
           type="text"
-          value={formData.last_name}
-          onChangeText={value => setFormData({ ...formData, last_name: value })}
+          value={formData.lastname}
+          onChangeText={value => setFormData({ ...formData, lastname: value })}
         />
       </View>
       <View noPaddingHorizontal>
