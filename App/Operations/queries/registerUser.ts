@@ -1,5 +1,5 @@
 import i18n from 'app/Services/i18n';
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import Config from 'react-native-config';
 
 const { BACKEND_URL } = Config;
@@ -55,11 +55,24 @@ const REGISTER_USER = async (formData: {
 
   if (isFormDataValid(formData)) {
     try {
-      const response = await axios.post(
-        `${BACKEND_URL}/users/register`,
-        formData,
-      );
-      return response;
+      await axios
+        .post(`${BACKEND_URL}/users/register`, formData)
+        .then((response: AxiosResponse) => {
+          console.log(response.data);
+        })
+        .catch((error: AxiosError) => {
+          if (error.response) {
+            const responseData = error.response.data;
+            if (responseData && responseData.message) {
+              const errorMessage = responseData.message;
+              console.log(errorMessage);
+            }
+          } else if (error.request) {
+            console.log('No response received');
+          } else {
+            console.log('Error', error.message);
+          }
+        });
     } catch (error) {
       throw error;
     }
