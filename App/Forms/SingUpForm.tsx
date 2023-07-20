@@ -9,7 +9,7 @@ import REGISTER_USER from 'app/Operations/queries/registerUser';
 
 import availableCountries from 'app/Helpers/availableCountries';
 
-const SignUpForm = () => {
+const SignUpForm = ({ userEmail }) => {
   const [isFormComplete, setIsFormComplete] = useState<boolean>(false);
   const [formData, setFormData] = useState({
     firstname: '',
@@ -25,8 +25,10 @@ const SignUpForm = () => {
     try {
       const response = await REGISTER_USER(formData);
       console.log(response);
+      userEmail(formData.email);
     } catch (error) {
       console.log(error);
+      userEmail('');
     }
   };
 
