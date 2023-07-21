@@ -3,54 +3,26 @@ import Config from 'react-native-config';
 
 const { BACKEND_URL } = Config;
 
-const REGISTER_USER = async (formData: {
-  firstname: string;
-  lastname: string;
-  username: string;
+const LOG_USER = async (formData: {
   email: string;
-  country: string;
   password: string;
-  confirm_password: string;
+  device_name: string;
 }) => {
   const isFormDataValid = (formData: {
-    firstname: string;
-    lastname: string;
-    username: string;
     email: string;
-    country: string;
     password: string;
-    confirm_password: string;
+    device_name: string;
   }) => {
-    const {
-      firstname,
-      lastname,
-      username,
-      email,
-      country,
-      password,
-      confirm_password,
-    } = formData;
+    const { email, password, device_name } = formData;
 
-    if (
-      !firstname ||
-      !lastname ||
-      !username ||
-      !email ||
-      !country ||
-      !password ||
-      !confirm_password
-    ) {
+    if (!email || !password || !device_name) {
       return false;
     }
 
     if (
-      typeof firstname !== 'string' ||
-      typeof lastname !== 'string' ||
-      typeof username !== 'string' ||
       typeof email !== 'string' ||
-      typeof country !== 'string' ||
       typeof password !== 'string' ||
-      typeof confirm_password !== 'string'
+      typeof device_name !== 'string'
     ) {
       return false;
     }
@@ -61,7 +33,7 @@ const REGISTER_USER = async (formData: {
   if (isFormDataValid(formData)) {
     try {
       await axios
-        .post(`${BACKEND_URL}/register`, formData)
+        .post(`${BACKEND_URL}/login`, formData)
         .then((response: AxiosResponse) => {
           console.log(response.data);
         })
@@ -86,4 +58,4 @@ const REGISTER_USER = async (formData: {
   }
 };
 
-export default REGISTER_USER;
+export default LOG_USER;
