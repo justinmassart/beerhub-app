@@ -43,11 +43,9 @@ const SignUpForm = ({ userEmail }) => {
     try {
       setIsLoading(true);
       const response = await REGISTER_USER(formData);
-      console.log(response);
       setIsLoading(false);
       userEmail(formData.email);
     } catch (error) {
-      console.log(error);
       setIsLoading(false);
       userEmail('');
     }
@@ -127,6 +125,7 @@ const SignUpForm = ({ userEmail }) => {
           <InputField
             type="password"
             value={formData.password}
+            textContentType={'oneTimeCode'}
             onChangeText={value =>
               setFormData({ ...formData, password: value })
             }
@@ -137,6 +136,7 @@ const SignUpForm = ({ userEmail }) => {
           <InputField
             type="password"
             value={formData.confirm_password}
+            textContentType={'oneTimeCode'}
             onChangeText={value =>
               setFormData({ ...formData, confirm_password: value })
             }
