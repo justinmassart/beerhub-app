@@ -37,6 +37,10 @@ const SignUp = () => {
                 To verify your email address, click on the button in the email
                 to this address : {userEmail}
               </Text>
+              <Text>
+                After that, go to the login page in the profile page and log
+                yourself in !
+              </Text>
             </View>
             <View noPaddingHorizontal>
               <TouchableOpacity
