@@ -6,10 +6,12 @@ import View from 'app/Components/Atoms/View';
 import Text from 'app/Components/Atoms/Text';
 import InputField from 'app/Components/Molecules/InputField';
 import LOG_USER from 'app/Operations/queries/LogUser';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginForm = () => {
   const [isFormComplete, setIsFormComplete] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -18,20 +20,23 @@ const LoginForm = () => {
 
   const getDeviceName = async () => {
     const name = await DeviceInfo.getDeviceName();
-    setFormData({ ...formData, device_name: name });
-    console.log(typeof name);
+    formData.device_name = name;
   };
 
   const handleLogin = async () => {
-    try {
-      await getDeviceName();
-      setIsLoading(true);
-      const response = await LOG_USER(formData);
-      console.log(response);
-      setIsLoading(false);
-    } catch (error) {
-      setIsLoading(false);
-      console.log(error);
+    if (isFormComplete) {
+      try {
+        await getDeviceName();
+        setIsLoading(true);
+        const response = await LOG_USER(formData);
+        if (response && response.message !== 'ERROR') {
+          await AsyncStorage.setItem('token', JSON.stringify(response));
+        }
+        setIsLoading(false);
+      } catch (error: any) {
+        setError(error);
+        setIsLoading(false);
+      }
     }
   };
 
@@ -45,9 +50,18 @@ const LoginForm = () => {
 
   return (
     <>
-      <View noPaddingHorizontal>
-        <Text>Login Form</Text>
-      </View>
+      {(error === 'EMAIL_NOT_VERIFIED' && (
+        <View noPaddingHorizontal>
+          <Text>
+            {'Please verify your email address with the email previously sent'}
+          </Text>
+        </View>
+      )) ||
+        (error === 'UNKNOWN_ERROR' && (
+          <View noPaddingHorizontal>
+            <Text>{'Unknown error, please contact an administrator'}</Text>
+          </View>
+        ))}
       <View noPaddingHorizontal>
         <Text>Email</Text>
         <InputField
@@ -59,6 +73,7 @@ const LoginForm = () => {
         <Text>Password</Text>
         <InputField
           type="password"
+          textContentType={'oneTimeCode'}
           onChangeText={value => setFormData({ ...formData, password: value })}
         />
       </View>
