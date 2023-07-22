@@ -52,6 +52,7 @@ const InputField: React.FC<InputFieldProps> = ({ type, ...rest }) => {
         secureTextEntry={secureTextEntry}
         value={rest.value}
         onChangeText={rest.onChangeText}
+        textContentType={rest.textContentType}
       />
     </Box>
   );
