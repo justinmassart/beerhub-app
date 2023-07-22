@@ -7,7 +7,6 @@ const { BACKEND_URL } = Config;
 const GET_BEERS = async (pageCount?: number) => {
   const locale = i18n.language;
   const pagination = pageCount ?? 1;
-  console.log(`${BACKEND_URL}/${locale}/beers?page=${pagination}`);
   try {
     const response = await axios.get(
       `${BACKEND_URL}/${locale}/beers?page=${pagination}`,
