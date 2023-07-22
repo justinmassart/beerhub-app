@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios from 'axios';
 import Config from 'react-native-config';
 
 const { BACKEND_URL } = Config;
@@ -32,25 +32,15 @@ const LOG_USER = async (formData: {
 
   if (isFormDataValid(formData)) {
     try {
-      await axios
-        .post(`${BACKEND_URL}/login`, formData)
-        .then((response: AxiosResponse) => {
-          console.log(response.data);
-        })
-        .catch((error: AxiosError) => {
-          if (error.response) {
-            const responseData = error.response.data;
-            if (responseData && responseData.message) {
-              const errorMessage = responseData.message;
-              console.log(errorMessage);
-            }
-          } else if (error.request) {
-            console.log('No response received');
-          } else {
-            console.log('Error', error.message);
-          }
-        });
-    } catch (error) {
+      const response = await axios.post(`${BACKEND_URL}/login`, formData);
+      // Handle the successful response here if needed
+    } catch (error: any) {
+      if (error.response && error.response.data && error.response.data.ERROR) {
+        const errorMessage = error.response.data.ERROR;
+        console.log(errorMessage);
+      } else {
+        console.log('Unexpected error occurred.');
+      }
       throw error;
     }
   } else {
