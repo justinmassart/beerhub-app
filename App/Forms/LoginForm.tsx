@@ -11,7 +11,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const LoginForm = () => {
   const [isFormComplete, setIsFormComplete] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  const [ERROR, setERROR] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -30,11 +30,14 @@ const LoginForm = () => {
         setIsLoading(true);
         const response = await LOG_USER(formData);
         if (response && response.message !== 'ERROR') {
-          await AsyncStorage.setItem('token', JSON.stringify(response));
+          await AsyncStorage.multiSet([
+            ['user', JSON.stringify(response.user)],
+            ['authToken', JSON.stringify(response.authToken)],
+          ]);
         }
         setIsLoading(false);
       } catch (error: any) {
-        setError(error);
+        setERROR(error.message);
         setIsLoading(false);
       }
     }
@@ -50,14 +53,16 @@ const LoginForm = () => {
 
   return (
     <>
-      {(error === 'EMAIL_NOT_VERIFIED' && (
+      {(ERROR === 'EMAIL_NOT_VERIFIED' && (
         <View noPaddingHorizontal>
           <Text>
-            {'Please verify your email address with the email previously sent'}
+            {
+              'Please verify your email address with the email previously sent before trying to log in'
+            }
           </Text>
         </View>
       )) ||
-        (error === 'UNKNOWN_ERROR' && (
+        (ERROR === 'UNKNOWN_ERROR' && (
           <View noPaddingHorizontal>
             <Text>{'Unknown error, please contact an administrator'}</Text>
           </View>
