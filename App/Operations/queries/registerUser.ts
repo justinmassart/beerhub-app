@@ -1,4 +1,5 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
+import axiosInstance from 'app/Providers/Axiosinstance';
 import Config from 'react-native-config';
 
 const { BACKEND_URL } = Config;
@@ -60,7 +61,7 @@ const REGISTER_USER = async (formData: {
 
   if (isFormDataValid(formData)) {
     try {
-      await axios
+      await axiosInstance
         .post(`${BACKEND_URL}/register`, formData)
         .then((response: AxiosResponse) => {
           console.log(response.data);
