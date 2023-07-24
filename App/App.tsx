@@ -8,12 +8,13 @@ import { AnchorProvider } from '@nandorojo/anchor';
 import { getTheme } from './Themes';
 import Navigation from './Navigation/index';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axiosInstance from './Providers/Axiosinstance';
 
 const App = () => {
   const theme = getTheme(false);
   const clearAsyncStorage = async () => {
     try {
-      await AsyncStorage.multiRemove(['beers', 'places']);
+      await AsyncStorage.multiRemove(['beers', 'places', 'authToken', 'user']);
       console.log('AsyncStorage cleared successfully.');
     } catch (error) {
       console.log('Error clearing AsyncStorage:', error);
