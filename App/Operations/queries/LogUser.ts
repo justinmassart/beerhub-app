@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axiosInstance from 'app/Providers/Axiosinstance';
 import Config from 'react-native-config';
 
 const { BACKEND_URL } = Config;
@@ -32,16 +32,18 @@ const LOG_USER = async (formData: {
 
   if (isFormDataValid(formData)) {
     try {
-      const response = await axios.post(`${BACKEND_URL}/login`, formData);
-      // Handle the successful response here if needed
+      const response = await axiosInstance.post(
+        `${BACKEND_URL}/login`,
+        formData,
+      );
+      return response.data;
     } catch (error: any) {
       if (error.response && error.response.data && error.response.data.ERROR) {
         const errorMessage = error.response.data.ERROR;
-        console.log(errorMessage);
+        throw new Error(errorMessage);
       } else {
-        console.log('Unexpected error occurred.');
+        throw new Error('UNKNOWN_ERROR');
       }
-      throw error;
     }
   } else {
     return new Error('NOT_ALLOWED');
