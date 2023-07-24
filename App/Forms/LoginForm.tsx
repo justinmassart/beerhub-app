@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
+
+import { useAuth } from 'app/Hooks/Me';
 
 import View from 'app/Components/Atoms/View';
 import Text from 'app/Components/Atoms/Text';
@@ -8,7 +10,8 @@ import InputField from 'app/Components/Molecules/InputField';
 import LOG_USER from 'app/Operations/queries/LogUser';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const LoginForm = () => {
+const LoginForm = ({ user }) => {
+  const { setMe } = useAuth();
   const [isFormComplete, setIsFormComplete] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [ERROR, setERROR] = useState<string | null>(null);
@@ -34,8 +37,12 @@ const LoginForm = () => {
             ['user', JSON.stringify(response.user)],
             ['authToken', JSON.stringify(response.authToken)],
           ]);
+          const user = response.user;
+          const authToken = response.authToken;
+          setMe({ ...user, authToken });
         }
         setIsLoading(false);
+        user(response.user);
       } catch (error: any) {
         setERROR(error.message);
         setIsLoading(false);
