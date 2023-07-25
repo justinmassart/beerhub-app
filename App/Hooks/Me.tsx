@@ -2,8 +2,14 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface User {
+  DOB: string;
+  country: string;
+  email: string;
   firstname: string;
-  // Add other user properties here
+  id: string;
+  lastname: string;
+  user_preferences_id: string;
+  username: string;
 }
 
 interface AuthContextType {
@@ -24,7 +30,6 @@ export function useAuth(): AuthContextType {
 export const AuthProvider: React.FC = ({ children }) => {
   const [me, setMe] = useState<User | null>(null);
 
-  // Load user data from AsyncStorage on app startup
   useEffect(() => {
     const loadUserData = async () => {
       try {
@@ -40,7 +45,6 @@ export const AuthProvider: React.FC = ({ children }) => {
     loadUserData();
   }, []);
 
-  // Save user data to AsyncStorage whenever me is updated
   useEffect(() => {
     const saveUserData = async () => {
       try {
