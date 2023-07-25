@@ -1,44 +1,44 @@
-import React from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { ProfileStackNavigationProp } from 'app/Navigation/AppTab/ProfileStack';
+import React, { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { ProfileStackNavigationProp } from 'app/Navigation/AppTab/ProfileStack';
+
+import { useAuth } from 'app/Hooks/Me';
 
 import View from 'app/Components/Atoms/View';
 import Text from 'app/Components/Atoms/Text';
 import PageContainer from 'app/Components/Atoms/PageContainer';
 
+import LogOrRegister from 'app/Components/Molecules/LogOrRegister';
+import REVOKE_TOKEN from 'app/Operations/queries/revokeToken';
+
 const Profile = () => {
+  const [ERROR, setERROR] = useState<string | null>(null);
   const { navigate } = useNavigation<ProfileStackNavigationProp>();
+  const { me, setMe } = useAuth();
+
+  const handlelogout = async () => {
+    console.log(me);
+    if (me) {
+      try {
+        await REVOKE_TOKEN(me.id);
+        await AsyncStorage.multiRemove(['user', 'authToken']);
+        setMe(null);
+      } catch (error: any) {
+        console.log(error);
+      }
+    }
+  };
+
   return (
     <PageContainer>
+      <View noPaddingHorizontal>
+        <Text>Profile page</Text>
+      </View>
       <View noPadding>
-        <View noPaddingHorizontal>
-          <Text>Profile page</Text>
-        </View>
-        <View noPaddingHorizontal>
-          <Text>You are not logged in ...</Text>
-          <View noPaddingHorizontal>
-            <TouchableOpacity
-              style={{
-                alignItems: 'center',
-                backgroundColor: '#DDDDDD',
-                padding: 10,
-              }}
-              onPress={() => navigate('Login')}>
-              <Text>Login</Text>
-            </TouchableOpacity>
-            <Text>or</Text>
-            <TouchableOpacity
-              style={{
-                alignItems: 'center',
-                backgroundColor: '#DDDDDD',
-                padding: 10,
-              }}
-              onPress={() => navigate('SignUp')}>
-              <Text>Sign Up</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+        {!me && <LogOrRegister />}
         <View noPaddingHorizontal>
           <TouchableOpacity
             style={{
@@ -50,6 +50,19 @@ const Profile = () => {
             <Text>Paramètres</Text>
           </TouchableOpacity>
         </View>
+        {me && (
+          <View noPaddingHorizontal>
+            <TouchableOpacity
+              style={{
+                alignItems: 'center',
+                backgroundColor: '#DDDDDD',
+                padding: 10,
+              }}
+              onPress={handlelogout}>
+              <Text>Logout</Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
     </PageContainer>
   );
