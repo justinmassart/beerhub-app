@@ -9,6 +9,7 @@ const REGISTER_USER = async (formData: {
   lastname: string;
   username: string;
   email: string;
+  phone: string;
   country: string;
   password: string;
   confirm_password: string;
@@ -18,6 +19,7 @@ const REGISTER_USER = async (formData: {
     lastname: string;
     username: string;
     email: string;
+    phone: string;
     country: string;
     password: string;
     confirm_password: string;
@@ -27,6 +29,7 @@ const REGISTER_USER = async (formData: {
       lastname,
       username,
       email,
+      phone,
       country,
       password,
       confirm_password,
@@ -37,11 +40,12 @@ const REGISTER_USER = async (formData: {
       !lastname ||
       !username ||
       !email ||
+      !phone ||
       !country ||
       !password ||
       !confirm_password
     ) {
-      return false;
+      throw new Error('FORM_NOT_COMPLETED');
     }
 
     if (
@@ -49,11 +53,12 @@ const REGISTER_USER = async (formData: {
       typeof lastname !== 'string' ||
       typeof username !== 'string' ||
       typeof email !== 'string' ||
+      typeof phone !== 'string' ||
       typeof country !== 'string' ||
       typeof password !== 'string' ||
       typeof confirm_password !== 'string'
     ) {
-      return false;
+      throw new Error('INVALID_FORM_DATA_TYPE');
     }
 
     return true;
@@ -61,26 +66,19 @@ const REGISTER_USER = async (formData: {
 
   if (isFormDataValid(formData)) {
     try {
-      await axiosInstance
-        .post(`${BACKEND_URL}/register`, formData)
-        .then((response: AxiosResponse) => {
-          console.log(response.data);
-        })
-        .catch((error: AxiosError) => {
-          if (error.response) {
-            const responseData = error.response.data;
-            if (responseData && responseData.message) {
-              const errorMessage = responseData.message;
-              console.log(errorMessage);
-            }
-          } else if (error.request) {
-            console.log('No response received');
-          } else {
-            console.log('Error', error.message);
-          }
-        });
-    } catch (error) {
-      throw error;
+      const response = await axiosInstance.post(
+        `${BACKEND_URL}/register`,
+        formData,
+      );
+      return response.data;
+    } catch (error: any) {
+      if (error.response && error.response.data && error.response.data.ERROR) {
+        const errorMessage = error.response.data.ERROR;
+        console.log(errorMessage);
+        throw new Error(errorMessage);
+      } else {
+        throw new Error('UNKNOWN_ERROR');
+      }
     }
   } else {
     return new Error('NOT_ALLOWED');
