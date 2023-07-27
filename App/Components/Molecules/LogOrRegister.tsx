@@ -28,8 +28,8 @@ const LogOrRegister = () => {
             backgroundColor: '#DDDDDD',
             padding: 10,
           }}
-          onPress={() => navigate('SignUp')}>
-          <Text>Sign Up</Text>
+          onPress={() => navigate('Register')}>
+          <Text>Register</Text>
         </TouchableOpacity>
       </View>
     </View>
