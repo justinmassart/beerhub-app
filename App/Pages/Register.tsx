@@ -7,11 +7,11 @@ import View from 'app/Components/Atoms/View';
 import Text from 'app/Components/Atoms/Text';
 import PageContainer from 'app/Components/Atoms/PageContainer';
 
-import SignUpForm from 'app/Forms/SingUpForm';
+import RegisterForm from 'app/Forms/RegisterForm';
 
 import { RootStackNavigationProp } from 'app/Navigation';
 
-const SignUp = () => {
+const Register = () => {
   const [userEmail, setUserEmail] = useState<string>('');
 
   const navigation = useNavigation<RootStackNavigationProp>();
@@ -27,7 +27,7 @@ const SignUp = () => {
     <PageContainer>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View noPaddingHorizontal>
-          <Text>Sign Up page</Text>
+          <Text>Register page</Text>
         </View>
         {userEmail ? (
           <View noPaddingHorizontal>
@@ -52,7 +52,7 @@ const SignUp = () => {
           </View>
         ) : (
           <View noPaddingHorizontal>
-            <SignUpForm userEmail={(value: string) => setUserEmail(value)} />
+            <RegisterForm userEmail={(value: string) => setUserEmail(value)} />
           </View>
         )}
       </ScrollView>
@@ -60,4 +60,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Register;

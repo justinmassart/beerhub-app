@@ -26,7 +26,7 @@ const Loader = () => (
   </View>
 );
 
-const SignUpForm = ({ userEmail }) => {
+const RegisterForm = ({ userEmail }) => {
   const [isFormComplete, setIsFormComplete] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState({
@@ -34,6 +34,7 @@ const SignUpForm = ({ userEmail }) => {
     lastname: '',
     username: '',
     email: '',
+    phone: '',
     country: '',
     password: '',
     confirm_password: '',
@@ -43,6 +44,7 @@ const SignUpForm = ({ userEmail }) => {
     try {
       setIsLoading(true);
       const response = await REGISTER_USER(formData);
+      console.log(response);
       setIsLoading(false);
       userEmail(formData.email);
     } catch (error) {
@@ -71,9 +73,6 @@ const SignUpForm = ({ userEmail }) => {
     <>
       {isLoading && <Loader />}
       <View noPadding style={{ opacity: isLoading ? 0.25 : 1 }}>
-        <View noPaddingHorizontal>
-          <Text>Login Form</Text>
-        </View>
         <View noPaddingHorizontal>
           <Text>First name</Text>
           <InputField
@@ -110,6 +109,14 @@ const SignUpForm = ({ userEmail }) => {
             type="email"
             value={formData.email}
             onChangeText={value => setFormData({ ...formData, email: value })}
+          />
+        </View>
+        <View noPaddingHorizontal>
+          <Text>Phone number</Text>
+          <InputField
+            type="phone"
+            value={formData.phone}
+            onChangeText={value => setFormData({ ...formData, phone: value })}
           />
         </View>
         <View noPaddingHorizontal>
@@ -159,4 +166,4 @@ const SignUpForm = ({ userEmail }) => {
   );
 };
 
-export default SignUpForm;
+export default RegisterForm;
