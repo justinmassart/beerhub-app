@@ -10,7 +10,7 @@ import ProfilePage from 'app/Pages/Profile';
 import SettingsPage from 'app/Pages/Settings';
 import LanguagePage from 'app/Pages/Language';
 import LoginPage from 'app/Pages/Login';
-import SignUpPage from 'app/Pages/SignUp';
+import RegisterPage from 'app/Pages/Register';
 import HeaderTitle from 'app/Components/Molecules/Navigation/HeaderTitle';
 import { RouteProp } from '@react-navigation/native';
 
@@ -19,7 +19,7 @@ export type ProfileNavigationType = {
   Settings: undefined;
   Language: undefined;
   Login: undefined;
-  SignUp: undefined;
+  Register: undefined;
 };
 
 export type ProfileStackNavigationProp =
@@ -63,8 +63,8 @@ export default () => {
         }}
       />
       <ProfileStack.Screen
-        name="SignUp"
-        component={SignUpPage}
+        name="Register"
+        component={RegisterPage}
         options={{
           headerTitle: () => <HeaderTitle title={t('SignUp.title')} />,
         }}
