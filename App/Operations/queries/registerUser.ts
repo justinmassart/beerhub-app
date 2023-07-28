@@ -1,4 +1,3 @@
-import { AxiosError, AxiosResponse } from 'axios';
 import axiosInstance from 'app/Providers/Axiosinstance';
 import Config from 'react-native-config';
 
@@ -70,8 +69,10 @@ const REGISTER_USER = async (formData: {
         `${BACKEND_URL}/register`,
         formData,
       );
+      console.log(response.data);
       return response.data;
     } catch (error: any) {
+      console.log(error);
       if (error.response && error.response.data && error.response.data.ERROR) {
         const errorMessage = error.response.data.ERROR;
         console.log(errorMessage);

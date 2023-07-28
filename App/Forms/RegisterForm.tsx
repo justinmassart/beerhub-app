@@ -48,6 +48,7 @@ const RegisterForm = ({ userEmail }) => {
       setIsLoading(false);
       userEmail(formData.email);
     } catch (error) {
+      console.log(error);
       setIsLoading(false);
       userEmail('');
     }
