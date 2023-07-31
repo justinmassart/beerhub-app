@@ -37,6 +37,7 @@ const LoginForm = ({ user }) => {
             ['user', JSON.stringify(response.user)],
             ['authToken', JSON.stringify(response.authToken)],
           ]);
+          await AsyncStorage.removeItem('verification');
           const user = response.user;
           const authToken = response.authToken;
           setMe({ ...user, authToken });
