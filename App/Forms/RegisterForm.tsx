@@ -8,6 +8,7 @@ import InputField from 'app/Components/Molecules/InputField';
 import REGISTER_USER from 'app/Operations/queries/registerUser';
 
 import availableCountries from 'app/Helpers/availableCountries';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Loader = () => (
   <View
@@ -26,7 +27,7 @@ const Loader = () => (
   </View>
 );
 
-const RegisterForm = ({ userEmail }) => {
+const RegisterForm = ({ userEmail, userPhone }) => {
   const [isFormComplete, setIsFormComplete] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState({
@@ -44,13 +45,15 @@ const RegisterForm = ({ userEmail }) => {
     try {
       setIsLoading(true);
       const response = await REGISTER_USER(formData);
-      console.log(response);
-      setIsLoading(false);
+      await AsyncStorage.setItem('verification', 'pending');
       userEmail(formData.email);
+      userPhone(formData.phone);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
       setIsLoading(false);
       userEmail('');
+      userPhone('');
     }
   };
 
