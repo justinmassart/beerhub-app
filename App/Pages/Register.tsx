@@ -11,6 +11,8 @@ import VerifyPhoneNumberForm from 'app/Forms/VerifyPhoneNumberForm';
 
 const Register = () => {
   const [userEmail, setUserEmail] = useState<string>('');
+  const [userPhone, setUserPhone] = useState<string>('');
+  const [isRegistered, setIsRegistered] = useState<boolean>(false);
 
   /*   const goToHomePage = () => {
     navigation.reset({
@@ -25,12 +27,26 @@ const Register = () => {
         <View noPaddingHorizontal>
           <Text>Register page</Text>
         </View>
-        {userEmail ? (
-          <VerifyPhoneNumberForm />
-        ) : (
-          <View noPaddingHorizontal>
-            <RegisterForm userEmail={(value: string) => setUserEmail(value)} />
+        {isRegistered ? (
+          <View>
+            <Text>
+              You have successfully verified your phone number, you can now
+              login and fully enjoy the app !
+            </Text>
           </View>
+        ) : (
+          <>
+            {userEmail ? (
+              <VerifyPhoneNumberForm phone={userPhone} />
+            ) : (
+              <View noPaddingHorizontal>
+                <RegisterForm
+                  userPhone={(value: string) => setUserPhone(value)}
+                  userEmail={(value: string) => setUserEmail(value)}
+                />
+              </View>
+            )}
+          </>
         )}
       </ScrollView>
     </PageContainer>
