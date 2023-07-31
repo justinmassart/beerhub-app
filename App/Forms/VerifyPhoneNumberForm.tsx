@@ -6,12 +6,14 @@ import InputField from 'app/Components/Molecules/InputField';
 import { TouchableOpacity } from 'react-native';
 
 import VERIFY_PHONE_NUMBER from 'app/Operations/queries/verifyPhoneNumber';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const VerifyPhoneNumberForm = () => {
+const VerifyPhoneNumberForm = ({ phone }) => {
   const [isFormComplete, setIsFormComplete] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState({
     code: '',
+    phone: '',
   });
 
   const handlePhoneNumberVerification = async () => {
@@ -19,8 +21,8 @@ const VerifyPhoneNumberForm = () => {
       const code = Number(formData.code);
       try {
         setIsLoading(true);
-        const response = await VERIFY_PHONE_NUMBER({ code });
-        console.log(response);
+        const response = await VERIFY_PHONE_NUMBER({ code, phone });
+        await AsyncStorage.setItem('verification', 'verified');
         setIsLoading(false);
       } catch (error) {
         console.log(error);
