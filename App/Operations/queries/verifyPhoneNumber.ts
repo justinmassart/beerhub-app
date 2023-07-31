@@ -3,19 +3,24 @@ import Config from 'react-native-config';
 
 const { BACKEND_URL } = Config;
 
-const VERIFY_PHONE_NUMBER = async (formData: { code: number }) => {
-  const isFormDataValid = (formData: { code: number }) => {
-    if (!formData.code) {
+const VERIFY_PHONE_NUMBER = async (formData: {
+  code: number;
+  phone: string;
+}) => {
+  const isFormDataValid = (formData: { code: number; phone: string }) => {
+    if (!formData.code || !formData.phone) {
       throw new Error('FORM_NOT_COMPLETED');
     }
-    if (typeof formData.code !== 'number') {
+    if (
+      typeof formData.code !== 'number' ||
+      typeof formData.phone !== 'string'
+    ) {
       throw new Error('INVALID_FORM_DATA_TYPE');
     }
 
     return true;
   };
 
-  console.log(formData.code);
   if (isFormDataValid(formData)) {
     try {
       const response = await axiosInstance.post(
