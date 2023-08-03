@@ -37,7 +37,7 @@ const Register = () => {
         ) : (
           <>
             {userEmail ? (
-              <VerifyPhoneNumberForm phone={userPhone} />
+              <VerifyPhoneNumberForm />
             ) : (
               <View noPaddingHorizontal>
                 <RegisterForm

@@ -63,6 +63,8 @@ const REGISTER_USER = async (formData: {
     return true;
   };
 
+  console.log(formData);
+
   if (isFormDataValid(formData)) {
     try {
       const response = await axiosInstance.post(

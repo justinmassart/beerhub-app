@@ -22,6 +22,7 @@ const VERIFY_PHONE_NUMBER = async (formData: {
   };
 
   if (isFormDataValid(formData)) {
+    console.log(formData);
     try {
       const response = await axiosInstance.post(
         `${BACKEND_URL}/verify`,

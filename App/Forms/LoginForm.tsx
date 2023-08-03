@@ -10,8 +10,8 @@ import InputField from 'app/Components/Molecules/InputField';
 import LOG_USER from 'app/Operations/queries/LogUser';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const LoginForm = ({ user }) => {
-  const { setMe } = useAuth();
+const LoginForm = ({ user, isPhoneVerified }) => {
+  const { setMe, me } = useAuth();
   const [isFormComplete, setIsFormComplete] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [ERROR, setERROR] = useState<string | null>(null);
@@ -29,8 +29,8 @@ const LoginForm = ({ user }) => {
   const handleLogin = async () => {
     if (isFormComplete) {
       try {
-        await getDeviceName();
         setIsLoading(true);
+        await getDeviceName();
         const response = await LOG_USER(formData);
         if (response && response.message !== 'ERROR') {
           await AsyncStorage.multiSet([
@@ -41,11 +41,12 @@ const LoginForm = ({ user }) => {
           const user = response.user;
           const authToken = response.authToken;
           setMe({ ...user, authToken });
+          user(response.user);
         }
         setIsLoading(false);
-        user(response.user);
       } catch (error: any) {
         setERROR(error.message);
+        isPhoneVerified(error.message === 'PHONE_NOT_VERIFIED' ? false : true);
         setIsLoading(false);
       }
     }
@@ -61,6 +62,7 @@ const LoginForm = ({ user }) => {
 
   return (
     <>
+      {/* TODO: change for phone */}
       {(ERROR === 'EMAIL_NOT_VERIFIED' && (
         <View noPaddingHorizontal>
           <Text>
@@ -70,6 +72,11 @@ const LoginForm = ({ user }) => {
           </Text>
         </View>
       )) ||
+        (ERROR === 'EMAIL_NOT_EXISTS' && (
+          <View noPaddingHorizontal>
+            <Text>{'This email isn’t registered in our database.'}</Text>
+          </View>
+        )) ||
         (ERROR === 'UNKNOWN_ERROR' && (
           <View noPaddingHorizontal>
             <Text>{'Unknown error, please contact an administrator'}</Text>

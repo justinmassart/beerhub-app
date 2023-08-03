@@ -48,6 +48,7 @@ const RegisterForm = ({ userEmail, userPhone }) => {
       await AsyncStorage.setItem('verification', 'pending');
       userEmail(formData.email);
       userPhone(formData.phone);
+      await AsyncStorage.setItem('phoneNumber', formData.phone);
       setIsLoading(false);
     } catch (error) {
       console.log(error);

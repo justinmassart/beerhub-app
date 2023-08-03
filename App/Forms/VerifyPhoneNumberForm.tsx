@@ -8,16 +8,17 @@ import { TouchableOpacity } from 'react-native';
 import VERIFY_PHONE_NUMBER from 'app/Operations/queries/verifyPhoneNumber';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const VerifyPhoneNumberForm = ({ phone }) => {
+const VerifyPhoneNumberForm = () => {
   const [isFormComplete, setIsFormComplete] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [userPhone, setUserPhone] = useState<string>('');
   const [formData, setFormData] = useState({
     code: '',
-    phone: '',
   });
 
   const handlePhoneNumberVerification = async () => {
-    if (isFormComplete) {
+    const phone = await AsyncStorage.getItem('phoneNumber');
+    if (isFormComplete && phone) {
       const code = Number(formData.code);
       try {
         setIsLoading(true);
@@ -31,20 +32,30 @@ const VerifyPhoneNumberForm = ({ phone }) => {
     }
   };
 
-  useEffect(() => {
+  const handleFormValidation = () => {
     const isFormValid =
       Object.values(formData).every(value => value !== null) &&
       formData.code.length === 6 &&
       typeof formData.code === 'string';
     setIsFormComplete(isFormValid);
-  }, [formData]);
+  };
+
+  useEffect(() => {
+    handleFormValidation();
+    const handleUserPhone = async () => {
+      const data = JSON.stringify(await AsyncStorage.getItem('phoneNumber'));
+      setUserPhone(data);
+    };
+
+    handleUserPhone();
+  }, [formData, userPhone]);
 
   return (
     <View noPaddingHorizontal>
       <View noPaddingHorizontal>
         <Text>
-          We just sent you a code to your phone number, please enter the code
-          here to verify your phone number.
+          We just sent a code to this phone number : {userPhone}.{'\n'}Please
+          enter the code here to verify your phone number.
         </Text>
       </View>
       <View noPaddingHorizontal>
