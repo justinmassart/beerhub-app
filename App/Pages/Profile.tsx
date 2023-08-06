@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -24,13 +24,24 @@ const Profile = () => {
     if (me) {
       try {
         await REVOKE_TOKEN(me.id);
-        await AsyncStorage.multiRemove(['user', 'authToken']);
         setMe(null);
+        await AsyncStorage.multiRemove(['user', 'authToken']);
       } catch (error: any) {
         console.log(error);
       }
     }
   };
+
+  const handleEmptyCache = async () => {
+    try {
+      setMe(null);
+      await AsyncStorage.clear();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {}, [me]);
 
   return (
     <PageContainer>
@@ -63,6 +74,17 @@ const Profile = () => {
             </TouchableOpacity>
           </View>
         )}
+        <View noPaddingHorizontal>
+          <TouchableOpacity
+            style={{
+              alignItems: 'center',
+              backgroundColor: '#DDDDDD',
+              padding: 10,
+            }}
+            onPress={handleEmptyCache}>
+            <Text>Empty cache</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </PageContainer>
   );
