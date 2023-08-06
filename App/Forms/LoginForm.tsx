@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 
@@ -10,13 +10,13 @@ import InputField from 'app/Components/Molecules/InputField';
 import LOG_USER from 'app/Operations/queries/LogUser';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const LoginForm = ({ user, isPhoneVerified }) => {
+const LoginForm = ({ isPhoneVerified }) => {
   const { setMe, me } = useAuth();
   const [isFormComplete, setIsFormComplete] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [ERROR, setERROR] = useState<string | null>(null);
   const [formData, setFormData] = useState({
-    email: '',
+    phone: '',
     password: '',
     device_name: '',
   });
@@ -56,7 +56,7 @@ const LoginForm = ({ user, isPhoneVerified }) => {
     const isFormValid =
       formData.password.length >= 6 &&
       formData.password.length <= 64 &&
-      /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
+      /^\+\d{5,15}$/.test(formData.phone);
     setIsFormComplete(isFormValid);
   }, [formData]);
 
@@ -83,10 +83,10 @@ const LoginForm = ({ user, isPhoneVerified }) => {
           </View>
         ))}
       <View noPaddingHorizontal>
-        <Text>Email</Text>
+        <Text>Phone</Text>
         <InputField
-          type="email"
-          onChangeText={value => setFormData({ ...formData, email: value })}
+          type="phone"
+          onChangeText={value => setFormData({ ...formData, phone: value })}
         />
       </View>
       <View noPaddingHorizontal>
