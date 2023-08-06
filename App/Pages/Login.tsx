@@ -10,11 +10,12 @@ import PageContainer from 'app/Components/Atoms/PageContainer';
 
 import LoginForm from 'app/Forms/LoginForm';
 
-import { UserType } from 'app/Types/UserType';
 import VerifyPhoneNumberForm from 'app/Forms/VerifyPhoneNumberForm';
 
+import { useAuth } from 'app/Hooks/Me';
+
 const Login = () => {
-  const [user, setUser] = useState<UserType | null>(null);
+  const { setMe, me } = useAuth();
   const [isPhoneVerified, setIsPhoneVerified] = useState<boolean>(true);
 
   const navigation = useNavigation<RootStackNavigationProp>();
@@ -26,6 +27,8 @@ const Login = () => {
     });
   };
 
+  useEffect(() => {}, [me]);
+
   return (
     <PageContainer>
       <View noPaddingHorizontal>
@@ -35,9 +38,9 @@ const Login = () => {
         <VerifyPhoneNumberForm />
       ) : (
         <>
-          {user ? (
+          {me ? (
             <View noPaddingHorizontal>
-              <Text>Welcome {user.firstname}</Text>
+              <Text>Welcome {me.firstname}</Text>
               <Text>You are logged in</Text>
               <TouchableOpacity
                 style={{ backgroundColor: 'white', padding: 10 }}
@@ -48,7 +51,6 @@ const Login = () => {
           ) : (
             <LoginForm
               isPhoneVerified={(value: boolean) => setIsPhoneVerified(value)}
-              user={(value: UserType) => setUser(value)}
             />
           )}
         </>
