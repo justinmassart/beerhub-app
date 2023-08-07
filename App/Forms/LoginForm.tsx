@@ -40,7 +40,8 @@ const LoginForm = ({ isPhoneVerified }) => {
           await AsyncStorage.removeItem('verification');
           const user = response.user;
           const authToken = response.authToken;
-          setMe({ ...user, authToken });
+          const accessRights = response.accessRights;
+          setMe({ ...user, authToken, accessRights });
           user(response.user);
         }
         setIsLoading(false);
