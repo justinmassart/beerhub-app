@@ -1,13 +1,22 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface User {
-  DOB: string;
+  authToken: string;
   country: string;
+  DOB: string;
   email: string;
   firstname: string;
   id: string;
   lastname: string;
+  phone: string;
+  role: string;
   user_preferences_id: string;
   username: string;
 }
@@ -27,7 +36,11 @@ export function useAuth(): AuthContextType {
   return context;
 }
 
-export const AuthProvider: React.FC = ({ children }) => {
+interface BaseLayoutProps {
+  children?: ReactNode;
+}
+
+export const AuthProvider: React.FC<BaseLayoutProps> = ({ children }) => {
   const [me, setMe] = useState<User | null>(null);
 
   useEffect(() => {
