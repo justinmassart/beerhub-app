@@ -23,7 +23,7 @@ const Profile = () => {
     console.log(me);
     if (me) {
       try {
-        await REVOKE_TOKEN(me.id);
+        await REVOKE_TOKEN(me.id, me.authToken);
         setMe(null);
         await AsyncStorage.multiRemove(['user', 'authToken']);
       } catch (error: any) {
@@ -41,7 +41,9 @@ const Profile = () => {
     }
   };
 
-  useEffect(() => {}, [me]);
+  useEffect(() => {
+    console.log(me);
+  }, [me]);
 
   return (
     <PageContainer>
