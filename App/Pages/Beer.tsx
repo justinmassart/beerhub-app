@@ -8,7 +8,7 @@ import BeerInformations from 'app/Components/Molecules/BeerInformations';
 
 const Beer = () => {
   const { params } = useRoute();
-  const { beer } = params;
+  const { beer }: any = params;
 
   return (
     <View noPadding flex={1}>
