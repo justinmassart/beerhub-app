@@ -71,17 +71,6 @@ const Profile = () => {
             </TouchableOpacity>
           </View>
         )}
-        <View noPaddingHorizontal>
-          <TouchableOpacity
-            style={{
-              alignItems: 'center',
-              backgroundColor: '#DDDDDD',
-              padding: 10,
-            }}
-            onPress={handleEmptyCache}>
-            <Text>Empty cache</Text>
-          </TouchableOpacity>
-        </View>
       </View>
     </PageContainer>
   );
