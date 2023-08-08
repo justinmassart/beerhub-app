@@ -20,7 +20,6 @@ const Profile = () => {
   const { me, setMe } = useAuth();
 
   const handlelogout = async () => {
-    console.log(me);
     if (me) {
       try {
         await REVOKE_TOKEN(me.id, me.authToken);
@@ -40,10 +39,6 @@ const Profile = () => {
       console.log(error);
     }
   };
-
-  useEffect(() => {
-    console.log(me);
-  }, [me]);
 
   return (
     <PageContainer>
