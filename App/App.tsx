@@ -8,8 +8,9 @@ import { AnchorProvider } from '@nandorojo/anchor';
 import { getTheme } from './Themes';
 import Navigation from './Navigation/index';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AuthProvider } from 'app/Hooks/Me';
 
-const App = () => {
+const App: React.FC = () => {
   const theme = getTheme(false);
   const clearAsyncStorage = async () => {
     try {
@@ -41,7 +42,9 @@ const App = () => {
           <ThemeProvider theme={theme}>
             <I18nProvider>
               <AnchorProvider horizontal={undefined}>
-                <Navigation />
+                <AuthProvider>
+                  <Navigation />
+                </AuthProvider>
               </AnchorProvider>
             </I18nProvider>
           </ThemeProvider>

@@ -1,38 +1,42 @@
 import React from 'react';
-import { View } from 'react-native';
-import { Shadow } from 'react-native-shadow-2';
+import { View, ViewProps } from 'react-native';
 
-const Box = ({
+interface BoxProps extends ViewProps {
+  style?: object;
+  shadow?: boolean;
+  color?: string;
+  radius?: number;
+  height?: number;
+}
+
+const Box: React.FC<BoxProps> = ({
   style = {},
   shadow = true,
   color = 'white',
   radius = 10,
-  height = 200,
+  height,
+  children,
   ...props
 }) => {
   const boxStyle = {
     backgroundColor: color,
     borderRadius: radius,
     minHeight: height,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.05,
+    shadowRadius: 5,
+
+    elevation: 5,
   };
 
   return (
-    <Shadow
-      disabled={!shadow}
-      stretch={true}
-      sides={{ start: true, end: true, bottom: true, top: false }}
-      corners={{
-        topStart: false,
-        topEnd: false,
-        bottomStart: true,
-        bottomEnd: true,
-      }}
-      startColor="#0001"
-      distance={7.5}>
-      <View style={[boxStyle, style]}>
-        <View {...props}></View>
-      </View>
-    </Shadow>
+    <View style={[boxStyle, style]} {...props}>
+      {children}
+    </View>
   );
 };
 

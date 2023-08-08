@@ -16,7 +16,7 @@ const BeerItem = ({ beer }: { beer: any }) => {
 
   return (
     <TouchableOpacity onPress={() => navigate('beer', { beer: beer })}>
-      <Box color={undefined} radius={undefined} style={{ marginTop: 32 }}>
+      <Box height={200} style={{ marginTop: 32 }}>
         <View
           noPadding
           isHorizontal

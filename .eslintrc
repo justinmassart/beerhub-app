@@ -29,6 +29,7 @@
   "rules": {
     "module-resolver/use-alias": 2,
     "no-spaced-func": 0,
+    "eslint-disable react-native/no-inline-styles": "off",
     "eslint-comments/no-unlimited-disable": 0,
     "prettier/prettier": 0,
     "@typescript-eslint/no-unused-vars": [
