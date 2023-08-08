@@ -7,6 +7,9 @@ import Text from 'app/Components/Atoms/Text';
 import { useNavigation } from '@react-navigation/native';
 import { BeersStackNavigationProp } from 'app/Navigation/AppTab/BeersStack';
 
+import { useAuth } from 'app/Hooks/Me';
+import LogOrRegisterModal from './Modals/LogOrRegisterModal';
+
 const styles = StyleSheet.create({
   floatingButton: {
     position: 'absolute',
@@ -57,11 +60,24 @@ const styles = StyleSheet.create({
 const FloatingButtonMenu = ({ isDarker }) => {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [didNavigate, setDidNavigate] = useState<boolean>(false);
+
+  const { me } = useAuth();
+  const [modalVisible, setModalVisible] = useState(false);
+
   const { navigate } = useNavigation<BeersStackNavigationProp>();
 
   const toggleMenu = () => {
     setIsMenuVisible(!isMenuVisible);
     isDarker(!isMenuVisible);
+  };
+
+  const checkNavigation = () => {
+    if (me) {
+      setDidNavigate(true);
+      navigate('addBeer');
+    } else {
+      setModalVisible(true);
+    }
   };
 
   useEffect(() => {
@@ -77,11 +93,7 @@ const FloatingButtonMenu = ({ isDarker }) => {
       {isMenuVisible && (
         <View style={styles.menuContainer}>
           <View noPadding>
-            <TouchableOpacity
-              onPress={() => {
-                setDidNavigate(true);
-                navigate('addBeer');
-              }}>
+            <TouchableOpacity onPress={checkNavigation}>
               <View
                 borderRadius={10}
                 paddingType="small"
@@ -102,6 +114,10 @@ const FloatingButtonMenu = ({ isDarker }) => {
           </View>
         </View>
       )}
+      <LogOrRegisterModal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+      />
     </>
   );
 };
