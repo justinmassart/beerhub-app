@@ -3,10 +3,13 @@ import { FlatList, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 
-import PageContainer from 'app/Components/Atoms/PageContainer';
 import GET_BEERS from 'app/Operations/queries/getBeers';
+
+import PageContainer from 'app/Components/Atoms/PageContainer';
 import Text from 'app/Components/Atoms/Text';
 import BeerItem from 'app/Components/Molecules/BeerItem';
+import FloatingButtonMenu from 'app/Components/Molecules/FloatingButtonMenu';
+import View from 'app/Components/Atoms/View';
 
 const Beers = () => {
   const [beers, setBeers] = useState<any | null>(null);
@@ -14,6 +17,7 @@ const Beers = () => {
   const [canLoadMore, setCanLoadMore] = useState<boolean>(true);
   const [lastPage, setLastPage] = useState<number | null>(null);
   const [resetResults, setResetResults] = useState<boolean>(false);
+  const [isDarker, setIsDarker] = useState<boolean>(false);
 
   const resetPagination = useCallback(async () => {
     const locales = await AsyncStorage.multiGet(['oldBeersLocale', 'locale']);
@@ -72,30 +76,35 @@ const Beers = () => {
   const renderBeerItem = ({ item }) => <BeerItem beer={item} />;
 
   return (
-    <PageContainer>
-      <FlatList
-        data={beers}
-        renderItem={renderBeerItem}
-        keyExtractor={item => item.id.toString()}
-        showsVerticalScrollIndicator={false}
-        ListFooterComponent={
-          <>
-            {canLoadMore ? (
-              <TouchableOpacity
-                style={{
-                  alignItems: 'center',
-                  backgroundColor: '#DDDDDD',
-                }}
-                onPress={() => handlePagination()}>
-                <Text>Load More</Text>
-              </TouchableOpacity>
-            ) : (
-              <Text>There is no more beers to load</Text>
-            )}
-          </>
-        }
-      />
-    </PageContainer>
+    <>
+      <PageContainer>
+        <View noPadding style={{ opacity: isDarker ? 0.2 : 1 }}>
+          <FlatList
+            data={beers}
+            renderItem={renderBeerItem}
+            keyExtractor={item => item.id.toString()}
+            showsVerticalScrollIndicator={false}
+            ListFooterComponent={
+              <>
+                {canLoadMore ? (
+                  <TouchableOpacity
+                    style={{
+                      alignItems: 'center',
+                      backgroundColor: '#DDDDDD',
+                    }}
+                    onPress={() => handlePagination()}>
+                    <Text>Load More</Text>
+                  </TouchableOpacity>
+                ) : (
+                  <Text>There is no more beers to load</Text>
+                )}
+              </>
+            }
+          />
+        </View>
+      </PageContainer>
+      <FloatingButtonMenu isDarker={(value: boolean) => setIsDarker(value)} />
+    </>
   );
 };
 
