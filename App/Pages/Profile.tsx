@@ -46,7 +46,7 @@ const Profile = () => {
         <Text>Profile page</Text>
       </View>
       <View noPadding>
-        {!me && <LogOrRegister />}
+        {!me && <LogOrRegister displayMessage={true} />}
         <View noPaddingHorizontal>
           <TouchableOpacity
             style={{
