@@ -12,6 +12,8 @@ import BeersPage from 'app/Pages/Beers';
 import BeerMapPage from 'app/Pages/BeerMap';
 import AddBeerPage from 'app/Pages/AddBeer';
 
+import LogOrRegisterModal from 'app/Components/Molecules/Modals/LogOrRegisterModal';
+
 import HeaderTitle from 'app/Components/Molecules/Navigation/HeaderTitle';
 
 import Text from 'atoms/Text';
@@ -23,6 +25,7 @@ export type BeersNavigationType = {
   };
   beerMap: undefined;
   addBeer: undefined;
+  LogOrRegisterModal: undefined;
 };
 
 export type BeersStackNavigationProp = StackNavigationProp<BeersNavigationType>;
@@ -65,6 +68,12 @@ export default () => {
         }}
       />
       <BeersStack.Screen name="addBeer" component={AddBeerPage} />
+      <BeersStack.Group screenOptions={{ presentation: 'modal' }}>
+        <BeersStack.Screen
+          name="LogOrRegisterModal"
+          component={LogOrRegisterModal}
+        />
+      </BeersStack.Group>
     </BeersStack.Navigator>
   );
 };
