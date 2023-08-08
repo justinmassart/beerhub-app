@@ -1,9 +1,9 @@
-import {ElementType} from 'react';
-import {ViewProps, View as RNView} from 'react-native';
-import {css} from 'styled-components/native';
+import { ElementType } from 'react';
+import { ViewProps, View as RNView } from 'react-native';
+import { css } from 'styled-components/native';
 
 import styled from 'themes/Styled';
-import {Metrics} from 'app/Themes';
+import { Metrics } from 'app/Themes';
 
 type AlignType = 'flex-start' | 'flex-end' | 'center' | 'stretch';
 type JustifyType = AlignType | 'space-around' | 'space-between';
@@ -19,6 +19,7 @@ interface Props extends ViewProps {
   noPaddingVertical?: boolean;
   noPaddingHorizontal?: boolean;
   paddingType?: PaddingSizeType;
+  borderRadius?: number;
 }
 
 export type PaddingSizeType = 'large' | 'normal' | 'small' | 'none';
@@ -38,11 +39,12 @@ export const getPadding = (padding?: PaddingSizeType) => {
 };
 
 const View: ElementType<Props> = styled(RNView)<Props>`
-  opacity: ${({hidden}) => (hidden ? 0 : 1)};
-  flex-direction: ${({isHorizontal}: Props) =>
+  borderradius: ${({ borderRadius }: Props) => borderRadius ?? 0}px;
+  opacity: ${({ hidden }) => (hidden ? 0 : 1)};
+  flex-direction: ${({ isHorizontal }: Props) =>
     isHorizontal ? 'row' : 'column'};
-  align-items: ${({alignItems = 'stretch'}: Props) => alignItems};
-  justify-content: ${({justifyContent = 'flex-start'}: Props) =>
+  align-items: ${({ alignItems = 'stretch' }: Props) => alignItems};
+  justify-content: ${({ justifyContent = 'flex-start' }: Props) =>
     justifyContent};
   padding: ${({
     noPadding = false,
@@ -61,9 +63,9 @@ const View: ElementType<Props> = styled(RNView)<Props>`
     }
     return getPadding(paddingType) + 'px';
   }};
-  width: ${({isFull}: Props) => (isFull ? '100%' : 'auto')};
+  width: ${({ isFull }: Props) => (isFull ? '100%' : 'auto')};
 
-  ${({flex}: Props) =>
+  ${({ flex }: Props) =>
     flex &&
     css`
       flex: ${flex};
