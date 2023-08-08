@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TouchableOpacity, StyleSheet } from 'react-native';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 import View from 'app/Components/Atoms/View';
 import Text from 'app/Components/Atoms/Text';
+import { useNavigation } from '@react-navigation/native';
+import { BeersStackNavigationProp } from 'app/Navigation/AppTab/BeersStack';
 
 const styles = StyleSheet.create({
   floatingButton: {
@@ -36,7 +39,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   menuItem: {
-    backgroundColor: '#DDDDDD',
+    backgroundColor: '#007AFF',
     marginRight: 0,
     marginBottom: 20,
     shadowColor: '#000',
@@ -53,26 +56,37 @@ const styles = StyleSheet.create({
 
 const FloatingButtonMenu = ({ isDarker }) => {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
+  const [didNavigate, setDidNavigate] = useState<boolean>(false);
+  const { navigate } = useNavigation<BeersStackNavigationProp>();
 
   const toggleMenu = () => {
     setIsMenuVisible(!isMenuVisible);
     isDarker(!isMenuVisible);
   };
 
+  useEffect(() => {
+    setIsMenuVisible(false);
+    isDarker(false);
+  }, [didNavigate]);
+
   return (
     <>
       <TouchableOpacity style={styles.floatingButton} onPress={toggleMenu}>
-        <Text style={styles.floatingButtonText}>+</Text>
+        <Icon name="plus" color={'white'} size={50} />
       </TouchableOpacity>
       {isMenuVisible && (
         <View style={styles.menuContainer}>
           <View noPadding>
-            <TouchableOpacity onPress={() => console.log('gne')}>
+            <TouchableOpacity
+              onPress={() => {
+                setDidNavigate(true);
+                navigate('addBeer');
+              }}>
               <View
                 borderRadius={10}
                 paddingType="small"
                 style={styles.menuItem}>
-                <Text>Add a beer</Text>
+                <Text color="white">Add a beer</Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -82,7 +96,7 @@ const FloatingButtonMenu = ({ isDarker }) => {
                 borderRadius={10}
                 paddingType="small"
                 style={styles.menuItem}>
-                <Text>Scan a beer</Text>
+                <Text color="white">Scan a beer</Text>
               </View>
             </TouchableOpacity>
           </View>
