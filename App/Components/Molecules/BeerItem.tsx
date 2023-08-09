@@ -8,14 +8,16 @@ import Box from 'app/Components/Atoms/Box';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Rating from './Rating';
 
-const BeerItem = ({ beer }: { beer: any }) => {
+const BeerItem = ({ beer, isDisabled }: { beer: any; isDisabled: boolean }) => {
   const { navigate } = useNavigation<BeersStackNavigationProp>();
   const aromas = JSON.parse(beer?.aromas);
   const averageRating = beer?.ratings?.average_rating || 0;
   const totalRater = beer?.ratings?.total_rater || 0;
 
   return (
-    <TouchableOpacity onPress={() => navigate('beer', { beer: beer })}>
+    <TouchableOpacity
+      disabled={isDisabled}
+      onPress={() => navigate('beer', { beer: beer })}>
       <Box height={200} style={{ marginTop: 32 }}>
         <View
           noPadding
@@ -46,13 +48,19 @@ const BeerItem = ({ beer }: { beer: any }) => {
           alignItems="center"
           justifyContent="space-between"
           style={{ maxWidth: '60%' }}>
-          <TouchableOpacity onPress={() => console.log('Favorite')}>
+          <TouchableOpacity
+            disabled={isDisabled}
+            onPress={() => console.log('Favorite')}>
             <Icon name="heart-outline" size={40} color="#000" />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => console.log('Comment')}>
+          <TouchableOpacity
+            disabled={isDisabled}
+            onPress={() => console.log('Comment')}>
             <Icon name="chatbox-ellipses-outline" size={40} color="#000" />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => console.log('Share')}>
+          <TouchableOpacity
+            disabled={isDisabled}
+            onPress={() => console.log('Share')}>
             <Icon name="share-outline" size={40} color="#000" />
           </TouchableOpacity>
         </View>
