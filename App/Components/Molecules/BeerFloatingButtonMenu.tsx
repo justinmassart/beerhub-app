@@ -59,7 +59,6 @@ const styles = StyleSheet.create({
 
 const BeerFloatingButtonMenu = ({ isDarker, isFloatingMenuOpen }) => {
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
-  const [didNavigate, setDidNavigate] = useState<boolean>(false);
 
   const { me } = useAuth();
 
@@ -75,7 +74,6 @@ const BeerFloatingButtonMenu = ({ isDarker, isFloatingMenuOpen }) => {
 
   const checkNavigation = () => {
     if (me) {
-      setDidNavigate(true);
       navigate('addBeer');
     } else {
       profileNavigate('Profile');
