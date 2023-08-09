@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 import View from 'app/Components/Atoms/View';
 import Text from 'app/Components/Atoms/Text';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { BeersStackNavigationProp } from 'app/Navigation/AppTab/BeersStack';
 
 import { useAuth } from 'app/Hooks/Me';
@@ -57,8 +57,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const BeerFloatingButtonMenu = ({ isDarker }) => {
-  const [isMenuVisible, setIsMenuVisible] = useState(false);
+const BeerFloatingButtonMenu = ({ isDarker, isFloatingMenuOpen }) => {
+  const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
   const [didNavigate, setDidNavigate] = useState<boolean>(false);
 
   const { me } = useAuth();
@@ -70,6 +70,7 @@ const BeerFloatingButtonMenu = ({ isDarker }) => {
   const toggleMenu = () => {
     setIsMenuVisible(!isMenuVisible);
     isDarker(!isMenuVisible);
+    isFloatingMenuOpen(!isMenuVisible);
   };
 
   const checkNavigation = () => {
@@ -81,10 +82,13 @@ const BeerFloatingButtonMenu = ({ isDarker }) => {
     }
   };
 
-  useEffect(() => {
-    setIsMenuVisible(false);
-    isDarker(false);
-  }, [didNavigate]);
+  useFocusEffect(
+    useCallback(() => {
+      setIsMenuVisible(false);
+      isDarker(false);
+      isFloatingMenuOpen(false);
+    }, []),
+  );
 
   return (
     <>
