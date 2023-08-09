@@ -46,7 +46,7 @@ const Profile = () => {
         <Text>Profile page</Text>
       </View>
       <View noPadding>
-        {!me && <LogOrRegister displayMessage={true} />}
+        {!me && <LogOrRegister />}
         <View noPaddingHorizontal>
           <TouchableOpacity
             style={{
@@ -71,6 +71,17 @@ const Profile = () => {
             </TouchableOpacity>
           </View>
         )}
+      </View>
+      <View noPaddingHorizontal>
+        <TouchableOpacity
+          style={{
+            alignItems: 'center',
+            backgroundColor: '#DDDDDD',
+            padding: 10,
+          }}
+          onPress={handleEmptyCache}>
+          <Text>Empty cache</Text>
+        </TouchableOpacity>
       </View>
     </PageContainer>
   );
