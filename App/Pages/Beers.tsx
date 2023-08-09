@@ -18,6 +18,7 @@ const Beers = () => {
   const [lastPage, setLastPage] = useState<number | null>(null);
   const [resetResults, setResetResults] = useState<boolean>(false);
   const [isDarker, setIsDarker] = useState<boolean>(false);
+  const [isFloatingMenuOpen, setIsFloatingMenuOpen] = useState<boolean>(false);
 
   const resetPagination = useCallback(async () => {
     const locales = await AsyncStorage.multiGet(['oldBeersLocale', 'locale']);
@@ -73,13 +74,16 @@ const Beers = () => {
     }, [resetPagination, fetchBeers]),
   );
 
-  const renderBeerItem = ({ item }) => <BeerItem beer={item} />;
+  const renderBeerItem = ({ item }) => (
+    <BeerItem beer={item} isDisabled={isFloatingMenuOpen} />
+  );
 
   return (
     <>
       <PageContainer>
         <View noPadding style={{ opacity: isDarker ? 0.2 : 1 }}>
           <FlatList
+            scrollEnabled={!isFloatingMenuOpen}
             data={beers}
             renderItem={renderBeerItem}
             keyExtractor={item => item.id.toString()}
@@ -88,6 +92,7 @@ const Beers = () => {
               <>
                 {canLoadMore ? (
                   <TouchableOpacity
+                    disabled={isDarker}
                     style={{
                       alignItems: 'center',
                       backgroundColor: '#DDDDDD',
@@ -105,6 +110,7 @@ const Beers = () => {
       </PageContainer>
       <BeerFloatingButtonMenu
         isDarker={(value: boolean) => setIsDarker(value)}
+        isFloatingMenuOpen={(value: boolean) => setIsFloatingMenuOpen(value)}
       />
     </>
   );
