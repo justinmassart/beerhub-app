@@ -32,7 +32,7 @@ const BeerItem = ({ beer, isDisabled }: { beer: any; isDisabled: boolean }) => {
             <Text>{beer?.brand?.brand?.name}</Text>
             <Text>{beer?.name}</Text>
             <Text>{beer?.type}</Text>
-            <Text>{aromas.join(', ')}</Text>
+            <Text>{aromas?.join(', ')}</Text>
             <Text>
               {33 + ' cl - ' + beer?.abv + '% ABV - ' + beer?.ibu + ' IBU'}
             </Text>
