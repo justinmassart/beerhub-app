@@ -5,12 +5,13 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import { ProfileStackNavigationProp } from 'app/Navigation/AppTab/ProfileStack';
 
-const LogOrRegister = ({ displayMessage, onClose }) => {
-  const { navigate } = useNavigation();
+const LogOrRegister = () => {
+  const { navigate } = useNavigation<ProfileStackNavigationProp>();
 
   return (
     <View noPaddingHorizontal alignItems="center">
-      {displayMessage && <Text>You are not logged in ...</Text>}
+      <Text>Log yourself in to access every features.</Text>
+      <Text>If you don't have an account yet, create one !</Text>
       <View noPaddingHorizontal alignItems="center">
         <TouchableOpacity
           style={{
@@ -19,13 +20,7 @@ const LogOrRegister = ({ displayMessage, onClose }) => {
             padding: 10,
           }}
           onPress={() => {
-            navigate('AppTab', {
-              screen: 'MyProfile',
-              params: {
-                screen: 'Login',
-              },
-            });
-            onClose(onClose);
+            navigate('Login');
           }}>
           <Text>Login</Text>
         </TouchableOpacity>
@@ -37,13 +32,7 @@ const LogOrRegister = ({ displayMessage, onClose }) => {
             padding: 10,
           }}
           onPress={() => {
-            navigate('AppTab', {
-              screen: 'MyProfile',
-              params: {
-                screen: 'Register',
-              },
-            });
-            onClose(onClose);
+            navigate('Register');
           }}>
           <Text>Register</Text>
         </TouchableOpacity>

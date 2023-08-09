@@ -15,7 +15,7 @@ const LogOrRegisterModal = ({ visible, onClose }) => {
             <View noPadding>
               <Text>Please log in or register to continue.</Text>
             </View>
-            <LogOrRegister onClose={onClose} displayMessage={false} />
+            <LogOrRegister />
             <Button title="Close" onPress={onClose} />
           </View>
         </View>

@@ -8,7 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import { BeersStackNavigationProp } from 'app/Navigation/AppTab/BeersStack';
 
 import { useAuth } from 'app/Hooks/Me';
-import LogOrRegisterModal from './Modals/LogOrRegisterModal';
+import { ProfileStackNavigationProp } from 'app/Navigation/AppTab/ProfileStack';
 
 const styles = StyleSheet.create({
   floatingButton: {
@@ -57,14 +57,15 @@ const styles = StyleSheet.create({
   },
 });
 
-const FloatingButtonMenu = ({ isDarker }) => {
+const BeerFloatingButtonMenu = ({ isDarker }) => {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [didNavigate, setDidNavigate] = useState<boolean>(false);
 
   const { me } = useAuth();
-  const [modalVisible, setModalVisible] = useState(false);
 
   const { navigate } = useNavigation<BeersStackNavigationProp>();
+  const { navigate: profileNavigate } =
+    useNavigation<ProfileStackNavigationProp>();
 
   const toggleMenu = () => {
     setIsMenuVisible(!isMenuVisible);
@@ -76,7 +77,7 @@ const FloatingButtonMenu = ({ isDarker }) => {
       setDidNavigate(true);
       navigate('addBeer');
     } else {
-      setModalVisible(true);
+      profileNavigate('Profile');
     }
   };
 
@@ -114,12 +115,8 @@ const FloatingButtonMenu = ({ isDarker }) => {
           </View>
         </View>
       )}
-      <LogOrRegisterModal
-        visible={modalVisible}
-        onClose={() => setModalVisible(false)}
-      />
     </>
   );
 };
 
-export default FloatingButtonMenu;
+export default BeerFloatingButtonMenu;

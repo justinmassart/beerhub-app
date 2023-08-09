@@ -43,7 +43,6 @@ export default () => {
         name="beers"
         component={BeersPage}
         options={{
-          headerLeft: () => <Text />,
           headerTitle: () => <HeaderTitle title={t('Beers.title')} />,
         }}
       />
@@ -68,12 +67,12 @@ export default () => {
         }}
       />
       <BeersStack.Screen name="addBeer" component={AddBeerPage} />
-      <BeersStack.Group screenOptions={{ presentation: 'modal' }}>
+      {/*       <BeersStack.Group screenOptions={{ presentation: 'modal' }}>
         <BeersStack.Screen
           name="LogOrRegisterModal"
           component={LogOrRegisterModal}
         />
-      </BeersStack.Group>
+      </BeersStack.Group> */}
     </BeersStack.Navigator>
   );
 };

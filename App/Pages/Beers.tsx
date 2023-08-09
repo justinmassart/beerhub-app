@@ -8,7 +8,7 @@ import GET_BEERS from 'app/Operations/queries/getBeers';
 import PageContainer from 'app/Components/Atoms/PageContainer';
 import Text from 'app/Components/Atoms/Text';
 import BeerItem from 'app/Components/Molecules/BeerItem';
-import FloatingButtonMenu from 'app/Components/Molecules/FloatingButtonMenu';
+import BeerFloatingButtonMenu from 'app/Components/Molecules/BeerFloatingButtonMenu';
 import View from 'app/Components/Atoms/View';
 
 const Beers = () => {
@@ -103,7 +103,9 @@ const Beers = () => {
           />
         </View>
       </PageContainer>
-      <FloatingButtonMenu isDarker={(value: boolean) => setIsDarker(value)} />
+      <BeerFloatingButtonMenu
+        isDarker={(value: boolean) => setIsDarker(value)}
+      />
     </>
   );
 };
