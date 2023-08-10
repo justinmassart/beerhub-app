@@ -4,23 +4,26 @@ import Config from 'react-native-config';
 const { BACKEND_URL } = Config;
 
 const LOG_USER = async (formData: {
-  phone: string;
+  callingCode: string;
+  phoneNumber: string;
   password: string;
   device_name: string;
 }) => {
   const isFormDataValid = (formData: {
-    phone: string;
+    callingCode: string;
+    phoneNumber: string;
     password: string;
     device_name: string;
   }) => {
-    const { phone, password, device_name } = formData;
+    const { callingCode, phoneNumber, password, device_name } = formData;
 
-    if (!phone || !password || !device_name) {
+    if (!callingCode || !phoneNumber || !password || !device_name) {
       return false;
     }
 
     if (
-      typeof phone !== 'string' ||
+      typeof callingCode !== 'string' ||
+      typeof phoneNumber !== 'string' ||
       typeof password !== 'string' ||
       typeof device_name !== 'string'
     ) {

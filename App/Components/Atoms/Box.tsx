@@ -21,7 +21,7 @@ const Box: React.FC<BoxProps> = ({
   const boxStyle = {
     backgroundColor: color,
     borderRadius: radius,
-    minHeight: height,
+    height: height,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,

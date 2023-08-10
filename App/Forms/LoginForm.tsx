@@ -1,22 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import { TouchableOpacity } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as RNLocalize from 'react-native-localize';
 
 import { useAuth } from 'app/Hooks/Me';
 
 import View from 'app/Components/Atoms/View';
 import Text from 'app/Components/Atoms/Text';
+
 import InputField from 'app/Components/Molecules/InputField';
+import PhoneNumberInput from 'app/Components/Molecules/PhoneNumberInput';
+
 import LOG_USER from 'app/Operations/queries/LogUser';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
 
 const LoginForm = ({ isPhoneVerified }) => {
-  const { setMe, me } = useAuth();
+  const { setMe } = useAuth();
+  const [userCountry, setUserCountry] = useState<string>('');
+  const [userCountryCallingCode, setUserCountryCallingCode] =
+    useState<string>('');
   const [isFormComplete, setIsFormComplete] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [ERROR, setERROR] = useState<string | null>(null);
   const [formData, setFormData] = useState({
-    phone: '',
+    callingCode: '+1',
+    phoneNumber: '',
     password: '',
     device_name: '',
   });
@@ -53,29 +62,47 @@ const LoginForm = ({ isPhoneVerified }) => {
     }
   };
 
+  const handleUserCountryData = async () => {
+    const country = await AsyncStorage.getItem('userCountryData');
+    if (country) {
+      const countryData = JSON.parse(country);
+      setUserCountry(RNLocalize.getCountry());
+      setUserCountryCallingCode(countryData.callingCode);
+    }
+  };
+
+  const handleCountrySelect = country => {
+    setFormData({ ...formData, callingCode: '+' + country });
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      handleUserCountryData();
+    }, []),
+  );
+
   useEffect(() => {
     const isFormValid =
       formData.password.length >= 6 &&
       formData.password.length <= 64 &&
-      /^\+\d{5,15}$/.test(formData.phone);
+      /^\d{5,15}$/.test(formData.phoneNumber);
     setIsFormComplete(isFormValid);
   }, [formData]);
 
   return (
     <>
-      {/* TODO: change for phone */}
-      {(ERROR === 'EMAIL_NOT_VERIFIED' && (
+      {(ERROR === 'PHONE_NOT_VERIFIED' && (
         <View noPaddingHorizontal>
           <Text>
             {
-              'Please verify your email address with the email previously sent before trying to log in'
+              'Please verify your phone number with the code previously sent before trying to log in'
             }
           </Text>
         </View>
       )) ||
-        (ERROR === 'EMAIL_NOT_EXISTS' && (
+        (ERROR === 'PHONE_NOT_EXISTS' && (
           <View noPaddingHorizontal>
-            <Text>{'This email isn’t registered in our database.'}</Text>
+            <Text>{'This phone number isn’t registered in our database.'}</Text>
           </View>
         )) ||
         (ERROR === 'UNKNOWN_ERROR' && (
@@ -84,10 +111,16 @@ const LoginForm = ({ isPhoneVerified }) => {
           </View>
         ))}
       <View noPaddingHorizontal>
-        <Text>Phone</Text>
-        <InputField
-          type="phone"
-          onChangeText={value => setFormData({ ...formData, phone: value })}
+        <Text>Phone Number</Text>
+        {}
+        <PhoneNumberInput
+          countryCallingCode={userCountryCallingCode}
+          countryCode={userCountry}
+          countryFlag={(value: string) => setUserCountry(value)}
+          onCountryChange={handleCountrySelect}
+          onPhoneNumberChange={(value: string) =>
+            setFormData({ ...formData, phoneNumber: value })
+          }
         />
       </View>
       <View noPaddingHorizontal>
@@ -113,5 +146,15 @@ const LoginForm = ({ isPhoneVerified }) => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  countryPickerContainerStyle: {
+    width: '20%',
+  },
+  inputBorder: {
+    borderTopLeftRadius: 5,
+    borderBottomLeftRadius: 5,
+  },
+});
 
 export default LoginForm;
