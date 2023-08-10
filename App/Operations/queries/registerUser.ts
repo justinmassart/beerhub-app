@@ -8,7 +8,8 @@ const REGISTER_USER = async (formData: {
   lastname: string;
   username: string;
   email: string;
-  phone: string;
+  phoneNumber: string;
+  callingCode: string;
   country: string;
   password: string;
   confirm_password: string;
@@ -18,7 +19,8 @@ const REGISTER_USER = async (formData: {
     lastname: string;
     username: string;
     email: string;
-    phone: string;
+    phoneNumber: string;
+    callingCode: string;
     country: string;
     password: string;
     confirm_password: string;
@@ -28,7 +30,8 @@ const REGISTER_USER = async (formData: {
       lastname,
       username,
       email,
-      phone,
+      phoneNumber,
+      callingCode,
       country,
       password,
       confirm_password,
@@ -39,7 +42,8 @@ const REGISTER_USER = async (formData: {
       !lastname ||
       !username ||
       !email ||
-      !phone ||
+      !phoneNumber ||
+      !callingCode ||
       !country ||
       !password ||
       !confirm_password
@@ -52,7 +56,8 @@ const REGISTER_USER = async (formData: {
       typeof lastname !== 'string' ||
       typeof username !== 'string' ||
       typeof email !== 'string' ||
-      typeof phone !== 'string' ||
+      typeof phoneNumber !== 'string' ||
+      typeof callingCode !== 'string' ||
       typeof country !== 'string' ||
       typeof password !== 'string' ||
       typeof confirm_password !== 'string'
