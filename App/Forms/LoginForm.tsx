@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import DeviceInfo from 'react-native-device-info';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as RNLocalize from 'react-native-localize';
@@ -13,7 +14,6 @@ import InputField from 'app/Components/Molecules/InputField';
 import PhoneNumberInput from 'app/Components/Molecules/PhoneNumberInput';
 
 import LOG_USER from 'app/Operations/queries/LogUser';
-import { useFocusEffect } from '@react-navigation/native';
 
 const LoginForm = ({ isPhoneVerified }) => {
   const { setMe } = useAuth();
