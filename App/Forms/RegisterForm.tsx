@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { TouchableOpacity, ActivityIndicator } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
+import * as RNLocalize from 'react-native-localize';
 
 import View from 'app/Components/Atoms/View';
 import Text from 'app/Components/Atoms/Text';
@@ -9,6 +11,8 @@ import REGISTER_USER from 'app/Operations/queries/registerUser';
 
 import availableCountries from 'app/Helpers/availableCountries';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import PhoneNumberInput from 'app/Components/Molecules/PhoneNumberInput';
 
 const Loader = () => (
   <View
@@ -30,12 +34,16 @@ const Loader = () => (
 const RegisterForm = ({ userEmail, userPhone }) => {
   const [isFormComplete, setIsFormComplete] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [userCountry, setUserCountry] = useState<string>('');
+  const [userCountryCallingCode, setUserCountryCallingCode] =
+    useState<string>('');
   const [formData, setFormData] = useState({
     firstname: '',
     lastname: '',
     username: '',
     email: '',
-    phone: '',
+    phoneNumber: '',
+    callingCode: '',
     country: '',
     password: '',
     confirm_password: '',
@@ -47,8 +55,11 @@ const RegisterForm = ({ userEmail, userPhone }) => {
       const response = await REGISTER_USER(formData);
       await AsyncStorage.setItem('verification', 'pending');
       userEmail(formData.email);
-      userPhone(formData.phone);
-      await AsyncStorage.setItem('phoneNumber', formData.phone);
+      userPhone(formData.phoneNumber);
+      await AsyncStorage.setItem(
+        'phoneNumber',
+        formData.callingCode + formData.phoneNumber,
+      );
       setIsLoading(false);
     } catch (error) {
       console.log(error);
@@ -58,10 +69,34 @@ const RegisterForm = ({ userEmail, userPhone }) => {
     }
   };
 
+  const handleUserCountryData = async () => {
+    const country = await AsyncStorage.getItem('userCountryData');
+    if (country) {
+      const countryData = JSON.parse(country);
+      const countryCode = RNLocalize.getCountry();
+      setUserCountry(countryCode);
+      setUserCountryCallingCode(countryData.callingCode);
+      setFormData({
+        ...formData,
+        country: countryCode,
+        callingCode: '+' + countryData.callingCode,
+      });
+    }
+  };
+
+  const handleCountrySelect = country => {
+    setFormData({ ...formData, callingCode: '+' + country });
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      handleUserCountryData();
+    }, []),
+  );
+
   useEffect(() => {
     const isFormValid =
       Object.values(formData).every(value => value !== '') &&
-      availableCountries(formData.country) &&
       formData.password.length >= 6 &&
       formData.password.length <= 64 &&
       formData.username.length >= 2 &&
@@ -118,18 +153,17 @@ const RegisterForm = ({ userEmail, userPhone }) => {
         </View>
         <View noPaddingHorizontal>
           <Text>Phone number</Text>
-          <InputField
-            type="phone"
-            value={formData.phone}
-            onChangeText={value => setFormData({ ...formData, phone: value })}
-          />
-        </View>
-        <View noPaddingHorizontal>
-          <Text>Country</Text>
-          <InputField
-            type="text"
-            value={formData.country}
-            onChangeText={value => setFormData({ ...formData, country: value })}
+          <PhoneNumberInput
+            countryCode={userCountry}
+            countryCallingCode={userCountryCallingCode}
+            countryFlag={(value: string) => {
+              setUserCountry(value);
+              formData.country = value;
+            }}
+            onCountryChange={handleCountrySelect}
+            onPhoneNumberChange={(value: string) =>
+              setFormData({ ...formData, phoneNumber: value })
+            }
           />
         </View>
         <View noPaddingHorizontal>
