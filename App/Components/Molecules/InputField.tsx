@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  TextInputProps,
-  KeyboardTypeOptions,
-  StyleSheet,
-  TextInput,
-} from 'react-native';
+import { TextInputProps, KeyboardTypeOptions, TextInput } from 'react-native';
 
 import Box from 'atoms/Box';
 
@@ -13,24 +8,6 @@ type InputType = 'email' | 'number' | 'phone' | 'text' | 'password';
 interface InputFieldProps extends TextInputProps {
   type: InputType;
 }
-
-const styles = StyleSheet.create({
-  input: {
-    backgroundColor: 'white',
-    borderRadius: 5,
-    padding: 10,
-  },
-  radioContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-  },
-  radioLabel: {
-    marginLeft: 5,
-  },
-});
 
 const InputField: React.FC<InputFieldProps> = ({ type, ...rest }) => {
   const getKeyboardType = (): KeyboardTypeOptions => {
@@ -51,13 +28,18 @@ const InputField: React.FC<InputFieldProps> = ({ type, ...rest }) => {
   const secureTextEntry = type === 'password';
 
   return (
-    <Box color={undefined} radius={undefined}>
+    <Box
+      color={undefined}
+      radius={5}
+      style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}>
       <TextInput
         autoCorrect={false}
         autoCapitalize={
           type === 'email' || type === 'password' ? 'none' : 'words'
         }
-        style={styles.input}
+        style={{
+          padding: 10,
+        }}
         keyboardType={getKeyboardType()}
         secureTextEntry={secureTextEntry}
         value={rest.value}
