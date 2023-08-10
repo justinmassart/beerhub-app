@@ -9,9 +9,12 @@ import { getTheme } from './Themes';
 import Navigation from './Navigation/index';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AuthProvider } from 'app/Hooks/Me';
+import { getCountryInfoAsync } from 'react-native-country-picker-modal/lib/CountryService';
+import * as RNLocalize from 'react-native-localize';
 
 const App: React.FC = () => {
   const theme = getTheme(false);
+
   const clearAsyncStorage = async () => {
     try {
       await AsyncStorage.multiRemove(['beers', 'places']);
@@ -21,7 +24,22 @@ const App: React.FC = () => {
     }
   };
 
+  const getUserCountryInfo = async () => {
+    const userCountry = await AsyncStorage.getItem('userCountryData');
+    if (!userCountry) {
+      const countryCode = RNLocalize.getCountry();
+      const countryData = await getCountryInfoAsync({
+        countryCode,
+      });
+      await AsyncStorage.setItem(
+        'userCountryData',
+        JSON.stringify(countryData),
+      );
+    }
+  };
+
   useEffect(() => {
+    getUserCountryInfo();
     const handleAppStateChange = async (state: AppStateStatus) => {
       if (state === 'inactive') {
         await clearAsyncStorage();
