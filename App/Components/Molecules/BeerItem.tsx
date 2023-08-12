@@ -18,7 +18,7 @@ const BeerItem = ({ beer, isDisabled }: { beer: any; isDisabled: boolean }) => {
     <TouchableOpacity
       disabled={isDisabled}
       onPress={() => navigate('beer', { beer: beer })}>
-      <Box height={200} style={{ marginTop: 32 }}>
+      <Box style={{ marginTop: 32 }}>
         <View
           noPadding
           isHorizontal
