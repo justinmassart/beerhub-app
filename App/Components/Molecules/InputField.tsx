@@ -45,6 +45,7 @@ const InputField: React.FC<InputFieldProps> = ({ type, ...rest }) => {
         value={rest.value}
         onChangeText={rest.onChangeText}
         textContentType={rest.textContentType}
+        placeholder={rest.placeholder}
       />
     </Box>
   );
