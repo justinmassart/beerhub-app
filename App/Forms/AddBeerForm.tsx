@@ -6,8 +6,13 @@ import Text from 'app/Components/Atoms/Text';
 import View from 'app/Components/Atoms/View';
 
 import InputField from 'app/Components/Molecules/InputField';
-import YesOrNoForm from './YesOrNoForm';
+import CountryInput from 'app/Components/Molecules/CountryInput';
+import BrandsSearchInput from 'app/Components/Molecules/BrandsSearchInput';
+
+import YesOrNoForm from 'app/Forms/YesOrNoForm';
+
 import STORE_BEER from 'app/Operations/queries/storeBeer';
+
 import { useAuth } from 'app/Hooks/Me';
 
 type FormData = {
@@ -50,6 +55,10 @@ const AddBeerForm = () => {
       duration: 150,
       useNativeDriver: false,
     }).start();
+  };
+
+  const handleCountrySelect = country => {
+    setFormData({ ...formData, country });
   };
 
   const handleFormVerification = () => {
@@ -97,20 +106,17 @@ const AddBeerForm = () => {
         </View>
         <View noPaddingHorizontal>
           <Text>Brand</Text>
-          <InputField
-            type="text"
-            onChangeText={(value: string) =>
+          <BrandsSearchInput
+            brandId={(value: string) =>
               setFormData({ ...formData, brand: value })
             }
           />
         </View>
         <View noPaddingHorizontal>
           <Text>Country</Text>
-          <InputField
-            type="text"
-            onChangeText={(value: string) =>
-              setFormData({ ...formData, country: value })
-            }
+          <CountryInput
+            countryCode={formData.country ?? undefined}
+            onCountryChange={handleCountrySelect}
           />
         </View>
         <View noPaddingHorizontal>
