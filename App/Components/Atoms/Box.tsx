@@ -7,21 +7,23 @@ interface BoxProps extends ViewProps {
   color?: string;
   radius?: number;
   height?: number;
+  input?: boolean;
 }
 
 const Box: React.FC<BoxProps> = ({
   style = {},
   shadow = true,
   color = 'white',
-  radius = 10,
+  radius,
   height,
+  input,
   children,
   ...props
 }) => {
   const boxStyle = {
     backgroundColor: color,
-    borderRadius: radius,
-    height: height,
+    borderRadius: radius ?? 5,
+    height: input ? 37 : height,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
