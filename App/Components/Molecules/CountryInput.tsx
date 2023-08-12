@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { TextInput, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { TouchableOpacity } from 'react-native';
 import CountryPicker from 'react-native-country-picker-modal';
 
 import i18n from 'app/Services/i18n';
 
-import Text from 'app/Components/Atoms/Text';
 import View from 'app/Components/Atoms/View';
 import Box from '../Atoms/Box';
 
@@ -35,12 +34,10 @@ const CountryInput = ({ countryCode, onCountryChange }) => {
   };
 
   return (
-    <Box height={37}>
+    <Box height={37} radius={5}>
       <View noPadding isHorizontal alignItems="center">
         <View noPadding flex={1}>
-          <TouchableOpacity
-            onPress={handleCountryPickerOpen}
-            style={styles.containerStyle}>
+          <TouchableOpacity onPress={handleCountryPickerOpen}>
             <View
               noPadding
               isHorizontal
@@ -49,6 +46,7 @@ const CountryInput = ({ countryCode, onCountryChange }) => {
               <CountryPicker
                 preferredCountries={[countryCode]}
                 translation={handleCountryPickerTranslation()}
+                withCountryNameButton={true}
                 withModal={true}
                 withFilter={true}
                 withCloseButton={true}
@@ -64,22 +62,6 @@ const CountryInput = ({ countryCode, onCountryChange }) => {
       </View>
     </Box>
   );
-};
-
-const styles = {
-  containerStyle: {
-    backgroundColor: 'white',
-    borderTopLeftRadius: 5,
-    borderBottomLeftRadius: 5,
-    borderRightWidth: 1,
-    borderColor: '#0000001A',
-  },
-  phoneInputStyle: {
-    backgroundColor: 'white',
-    padding: 10,
-    borderTopRightRadius: 5,
-    borderBottomRightRadius: 5,
-  },
 };
 
 export default CountryInput;
