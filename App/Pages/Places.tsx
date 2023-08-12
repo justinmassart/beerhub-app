@@ -1,10 +1,11 @@
 import React, { useState, useCallback } from 'react';
-import { View, FlatList, TouchableOpacity } from 'react-native';
+import { FlatList, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 
 import GET_PLACES from 'app/Operations/queries/getPlaces';
 import Text from 'app/Components/Atoms/Text';
+import View from 'app/Components/Atoms/View';
 import PageContainer from 'app/Components/Atoms/PageContainer';
 import PlaceItem from 'app/Components/Molecules/PlaceItem';
 
@@ -81,14 +82,16 @@ const Places = () => {
         ListFooterComponent={
           <>
             {canLoadMore ? (
-              <TouchableOpacity
-                style={{
-                  alignItems: 'center',
-                  backgroundColor: '#DDDDDD',
-                }}
-                onPress={() => handlePagination()}>
-                <Text>Load More</Text>
-              </TouchableOpacity>
+              <View noPaddingHorizontal>
+                <TouchableOpacity
+                  style={{
+                    alignItems: 'center',
+                    backgroundColor: '#DDDDDD',
+                  }}
+                  onPress={() => handlePagination()}>
+                  <Text>Load More</Text>
+                </TouchableOpacity>
+              </View>
             ) : (
               <Text>There is no more places to load</Text>
             )}

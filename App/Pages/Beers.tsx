@@ -91,15 +91,17 @@ const Beers = () => {
             ListFooterComponent={
               <>
                 {canLoadMore ? (
-                  <TouchableOpacity
-                    disabled={isDarker}
-                    style={{
-                      alignItems: 'center',
-                      backgroundColor: '#DDDDDD',
-                    }}
-                    onPress={() => handlePagination()}>
-                    <Text>Load More</Text>
-                  </TouchableOpacity>
+                  <View noPaddingHorizontal>
+                    <TouchableOpacity
+                      disabled={isDarker}
+                      style={{
+                        alignItems: 'center',
+                        backgroundColor: '#DDDDDD',
+                      }}
+                      onPress={() => handlePagination()}>
+                      <Text>Load More</Text>
+                    </TouchableOpacity>
+                  </View>
                 ) : (
                   <Text>There is no more beers to load</Text>
                 )}
