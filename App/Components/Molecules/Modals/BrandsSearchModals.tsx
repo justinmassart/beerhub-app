@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
   Modal,
-  TextInput,
   FlatList,
   Text,
   TouchableOpacity,

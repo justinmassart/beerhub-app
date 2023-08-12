@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextInput, Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
 
 import View from 'app/Components/Atoms/View';
 
