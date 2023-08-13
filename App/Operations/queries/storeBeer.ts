@@ -11,10 +11,10 @@ const STORE_BEER = async (
     type: string;
     color: string;
     abv: number;
-    volume_available?: [string];
-    container_available?: [string];
-    aromas?: [string];
-    ingredients?: [string];
+    volume_available?: string[];
+    container_available?: string[];
+    aromas?: string[];
+    ingredients?: string[];
     ibu?: number;
     is_gluten_free?: boolean;
     is_from_abbey?: boolean;

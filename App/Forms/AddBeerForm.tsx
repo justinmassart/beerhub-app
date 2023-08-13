@@ -15,6 +15,9 @@ import STORE_BEER from 'app/Operations/queries/storeBeer';
 
 import { useAuth } from 'app/Hooks/Me';
 import BeerTypesSearchField from 'app/Components/Molecules/BeerTypesSearchInputs';
+import BeerColorsSearchField from 'app/Components/Molecules/BeerColorsSearchInputs';
+import BeerVolumesSearchField from 'app/Components/Molecules/BeerVolumesSearchField';
+import BeerContainersSearchField from 'app/Components/Molecules/BeerContainersSearchField';
 
 type FormData = {
   name: string;
@@ -23,10 +26,10 @@ type FormData = {
   type: string;
   color: string;
   abv: number;
-  volume_available?: [string];
-  container_available?: [string];
-  aromas?: [string];
-  ingredients?: [string];
+  volume_available?: string[];
+  container_available?: string[];
+  aromas?: string[];
+  ingredients?: string[];
   ibu?: number;
   is_gluten_free?: boolean;
   is_from_abbey?: boolean;
@@ -130,9 +133,8 @@ const AddBeerForm = () => {
         </View>
         <View noPaddingHorizontal>
           <Text>Color</Text>
-          <InputField
-            type="text"
-            onChangeText={(value: string) =>
+          <BeerColorsSearchField
+            beerColorName={(value: string) =>
               setFormData({ ...formData, color: value })
             }
           />
@@ -189,19 +191,17 @@ const AddBeerForm = () => {
         <View noPadding>
           <View noPaddingHorizontal>
             <Text>Volume Available</Text>
-            <InputField
-              type="text"
-              onChangeText={(value: string) =>
-                setFormData({ ...formData, volume_available: [value] })
+            <BeerVolumesSearchField
+              beerVolumeQuantity={(value: string[]) =>
+                (formData.volume_available = value)
               }
             />
           </View>
           <View noPaddingHorizontal>
             <Text>Container Available</Text>
-            <InputField
-              type="text"
-              onChangeText={(value: string) =>
-                setFormData({ ...formData, container_available: [value] })
+            <BeerContainersSearchField
+              beerContainers={(value: string[]) =>
+                (formData.container_available = value)
               }
             />
           </View>

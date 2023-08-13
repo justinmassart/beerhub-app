@@ -3,19 +3,19 @@ import { Text, TouchableOpacity } from 'react-native';
 
 import View from 'app/Components/Atoms/View';
 
-import BrandsSearchModal from 'app/Components/Molecules/Modals/BrandsSearchModals';
 import Box from '../Atoms/Box';
 
-const BeerTypesSearchField = ({ beerTypeName }) => {
+import BeerColorsSearchModal from './Modals/BeerColorsSearchModal';
+
+const BeerColorsSearchField = ({ beerColorName }) => {
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
-  const [selectedBeerType, setSelectedBeerType] = useState<{
-    name: string;
-  } | null>(null);
+  const [selectedBeerType, setSelectedBeerType] = useState<string>('');
 
   const openModal = () => setModalVisible(true);
   const closeModal = () => setModalVisible(false);
-  const handleSelectBrand = (beerType: { name: string }) => {
-    setSelectedBeerType(beerType);
+  const handleSelectColor = (beerColor: string) => {
+    setSelectedBeerType(beerColor);
+    beerColorName(beerColor);
     closeModal();
   };
 
@@ -24,17 +24,17 @@ const BeerTypesSearchField = ({ beerTypeName }) => {
       <TouchableOpacity onPress={openModal}>
         <Box input={true}>
           <View noPaddingVertical flex={1} justifyContent="center">
-            <Text>{selectedBeerType?.name || 'Select a Brand'}</Text>
+            <Text>{selectedBeerType || 'Select the color of the beer'}</Text>
           </View>
         </Box>
       </TouchableOpacity>
-      <BrandsSearchModal
+      <BeerColorsSearchModal
         isVisible={isModalVisible}
         onClose={closeModal}
-        onSelect={handleSelectBrand}
+        onSelect={handleSelectColor}
       />
     </View>
   );
 };
 
-export default BeerTypesSearchField;
+export default BeerColorsSearchField;
