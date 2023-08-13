@@ -14,6 +14,7 @@ import YesOrNoForm from 'app/Forms/YesOrNoForm';
 import STORE_BEER from 'app/Operations/queries/storeBeer';
 
 import { useAuth } from 'app/Hooks/Me';
+import BeerTypesSearchField from 'app/Components/Molecules/BeerTypesSearchInputs';
 
 type FormData = {
   name: string;
@@ -121,9 +122,8 @@ const AddBeerForm = () => {
         </View>
         <View noPaddingHorizontal>
           <Text>Type</Text>
-          <InputField
-            type="text"
-            onChangeText={(value: string) =>
+          <BeerTypesSearchField
+            beerTypeName={(value: string) =>
               setFormData({ ...formData, type: value })
             }
           />

@@ -7,7 +7,7 @@ const GET_BRANDS_INPUTS = async (searchTerm: string) => {
   if (searchTerm) {
     try {
       const response = await axiosInstance.get(
-        `${BACKEND_URL}/inputs/brand-selector?search_term=${searchTerm}`,
+        `${BACKEND_URL}/search-inputs/brand-selector?search_term=${searchTerm}`,
       );
       return response;
     } catch (error: any) {
