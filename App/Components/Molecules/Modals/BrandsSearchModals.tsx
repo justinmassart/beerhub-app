@@ -80,6 +80,22 @@ const BrandsSearchModal = ({ isVisible, onClose, onSelect }) => {
           )}
           keyExtractor={item => item.id}
         />
+        {searchTerm.length >= 2 && (
+          <View noPaddingHorizontal>
+            <TouchableOpacity
+              style={{
+                backgroundColor: 'white',
+                padding: 10,
+              }}
+              onPress={() => {
+                setResults([{ id: '', name: '' }]);
+                setSearchTerm('');
+                onSelect({ id: '', name: searchTerm });
+              }}>
+              <Text>Add the brand : {searchTerm}</Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
     </Modal>
   );

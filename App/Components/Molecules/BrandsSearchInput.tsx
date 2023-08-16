@@ -15,10 +15,9 @@ const BrandsSearchInput = ({ brandId }) => {
 
   const openModal = () => setModalVisible(true);
   const closeModal = () => setModalVisible(false);
-  const handleSelectBrand = (brand: { id: string; name: string }) => {
-    setSelectedBrand(brand);
-    console.log(brand.id);
-    brandId(brand.id);
+  const handleSelectBrand = ({ id, name }: { id: string; name: string }) => {
+    setSelectedBrand({ id, name });
+    brandId(id ?? '');
     closeModal();
   };
 

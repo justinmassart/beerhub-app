@@ -66,7 +66,6 @@ const AddBeerForm = () => {
   };
 
   const handleFormVerification = () => {
-    formData.abv;
     const isFormComplete =
       Object.values(formData).every(value => value !== '') &&
       formData.abv !== 0 &&
@@ -106,6 +105,7 @@ const AddBeerForm = () => {
             onChangeText={(value: string) =>
               setFormData({ ...formData, name: value })
             }
+            placeholder="Enter the name of the beer"
           />
         </View>
         <View noPaddingHorizontal>
@@ -147,6 +147,7 @@ const AddBeerForm = () => {
               const formValue = value.replace(',', '.');
               setFormData({ ...formData, abv: Number(formValue) });
             }}
+            placeholder="Enter the quantity of alcohol of the beer"
           />
         </View>
       </View>
@@ -233,6 +234,7 @@ const AddBeerForm = () => {
                 if (Number(formValue) !== 0)
                   setFormData({ ...formData, ibu: Number(formValue) });
               }}
+              placeholder="Enter the IBU of the beer"
             />
           </View>
           <View noPaddingHorizontal>
