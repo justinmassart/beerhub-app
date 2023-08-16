@@ -3,7 +3,7 @@ import { Text, TouchableOpacity } from 'react-native';
 
 import View from 'app/Components/Atoms/View';
 
-import BrandsSearchModal from 'app/Components/Molecules/Modals/BrandsSearchModals';
+import BeerTypesSearchModal from 'app/Components/Molecules/Modals/BeerTypesSearchModal';
 import Box from '../Atoms/Box';
 
 const BeerTypesSearchField = ({ beerTypeName }) => {
@@ -24,11 +24,13 @@ const BeerTypesSearchField = ({ beerTypeName }) => {
       <TouchableOpacity onPress={openModal}>
         <Box input={true}>
           <View noPaddingVertical flex={1} justifyContent="center">
-            <Text>{selectedBeerType?.name || 'Select a Brand'}</Text>
+            <Text>
+              {selectedBeerType?.name || 'Select the type of the beer'}
+            </Text>
           </View>
         </Box>
       </TouchableOpacity>
-      <BrandsSearchModal
+      <BeerTypesSearchModal
         isVisible={isModalVisible}
         onClose={closeModal}
         onSelect={handleSelectBrand}
