@@ -18,6 +18,7 @@ import BeerTypesSearchField from 'app/Components/Molecules/BeerTypesSearchInputs
 import BeerColorsSearchField from 'app/Components/Molecules/BeerColorsSearchInputs';
 import BeerVolumesSearchField from 'app/Components/Molecules/BeerVolumesSearchField';
 import BeerContainersSearchField from 'app/Components/Molecules/BeerContainersSearchField';
+import NumberPicker from 'app/Components/Molecules/NumberPicker';
 
 type FormData = {
   name: string;
@@ -93,6 +94,7 @@ const AddBeerForm = () => {
 
   useEffect(() => {
     handleFormVerification();
+    console.log(formData);
   }, [formData]);
 
   return (
@@ -141,13 +143,10 @@ const AddBeerForm = () => {
         </View>
         <View noPaddingHorizontal>
           <Text>ABV</Text>
-          <InputField
-            type="number"
-            onChangeText={(value: string) => {
-              const formValue = value.replace(',', '.');
-              setFormData({ ...formData, abv: Number(formValue) });
-            }}
-            placeholder="Enter the quantity of alcohol of the beer"
+          <NumberPicker
+            onValueSubmit={(value: number) =>
+              setFormData({ ...formData, abv: value })
+            }
           />
         </View>
       </View>
