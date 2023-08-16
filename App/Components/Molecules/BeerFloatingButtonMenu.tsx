@@ -9,6 +9,7 @@ import { BeersStackNavigationProp } from 'app/Navigation/AppTab/BeersStack';
 
 import { useAuth } from 'app/Hooks/Me';
 import { ProfileStackNavigationProp } from 'app/Navigation/AppTab/ProfileStack';
+import { RootStackNavigationProp } from 'app/Navigation';
 
 const styles = StyleSheet.create({
   floatingButton: {
@@ -76,7 +77,7 @@ const BeerFloatingButtonMenu = ({ isDarker, isFloatingMenuOpen }) => {
     if (me) {
       navigate('addBeer');
     } else {
-      profileNavigate('Profile');
+      profileNavigate('MyProfile');
     }
   };
 
