@@ -7,12 +7,16 @@ import Box from '../Atoms/Box';
 
 import BeerContainersSearchModal from './Modals/BeerContainersSearchModal';
 
-const BeerContainersSearchField = ({ beerContainers }) => {
+const BeerContainersSearchField = ({ onChange }) => {
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
   const [selectedBeerVolume, setSelectedBeerVolume] = useState<string[]>([]);
 
   const openModal = () => setModalVisible(true);
   const closeModal = () => setModalVisible(false);
+
+  const handleOnChange = value => {
+    onChange(value);
+  };
 
   return (
     <View noPaddingHorizontal>
@@ -28,7 +32,10 @@ const BeerContainersSearchField = ({ beerContainers }) => {
       <BeerContainersSearchModal
         isVisible={isModalVisible}
         onClose={closeModal}
-        onSelect={(value: string[]) => setSelectedBeerVolume(value)}
+        onSelect={value => {
+          setSelectedBeerVolume(value);
+          handleOnChange(value);
+        }}
       />
     </View>
   );

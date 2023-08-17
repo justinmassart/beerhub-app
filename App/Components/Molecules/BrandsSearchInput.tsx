@@ -6,7 +6,7 @@ import View from 'app/Components/Atoms/View';
 import BrandsSearchModal from 'app/Components/Molecules/Modals/BrandsSearchModals';
 import Box from '../Atoms/Box';
 
-const BrandsSearchInput = ({ brandId }) => {
+const BrandsSearchInput = ({ onChange }) => {
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
   const [selectedBrand, setSelectedBrand] = useState<{
     id: string;
@@ -17,7 +17,7 @@ const BrandsSearchInput = ({ brandId }) => {
   const closeModal = () => setModalVisible(false);
   const handleSelectBrand = ({ id, name }: { id: string; name: string }) => {
     setSelectedBrand({ id, name });
-    brandId(id ?? '');
+    onChange({ id, name });
     closeModal();
   };
 

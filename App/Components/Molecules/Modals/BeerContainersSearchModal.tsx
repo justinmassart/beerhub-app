@@ -17,7 +17,7 @@ const BeerContainersSearchModal = ({ isVisible, onClose, onSelect }) => {
   );
   const containersAvailable = ['bottle', 'can', 'keg', 'barrel'];
 
-  const handleSelectVolumes = (container: string) => {
+  const handleSelectVolumes = container => {
     if (selectedBeerContainer.includes(container)) {
       const updatedVolumes = selectedBeerContainer.filter(
         item => item !== container,

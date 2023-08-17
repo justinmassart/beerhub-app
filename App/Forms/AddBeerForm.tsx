@@ -22,7 +22,7 @@ import NumberPicker from 'app/Components/Molecules/NumberPicker';
 
 type FormData = {
   name: string;
-  brand: string;
+  brand: { id: string; name: string };
   country: string;
   type: string;
   color: string;
@@ -44,7 +44,7 @@ const AddBeerForm = () => {
   const rotateValue = useRef(new Animated.Value(0)).current;
   const [formData, setFormData] = useState<FormData>({
     name: '',
-    brand: '',
+    brand: { id: '', name: '' },
     country: '',
     type: '',
     color: '',
@@ -71,11 +71,12 @@ const AddBeerForm = () => {
       Object.values(formData).every(value => value !== '') &&
       formData.abv !== 0 &&
       !isNaN(formData.abv) &&
-      /^[a-zA-Z0-9]+$/.test(formData?.name) &&
-      /^[a-zA-Z0-9]+$/.test(formData?.brand) &&
+      formData.name !== '' &&
+      formData.brand.name !== '' &&
       /^^[A-Za-z-]+$/.test(formData?.country) &&
       /^^[A-Za-z-]+$/.test(formData?.type) &&
       /^^[A-Za-z-]+$/.test(formData?.color);
+    console.log(isFormComplete);
     setIsFormValid(isFormComplete);
   };
 
@@ -93,8 +94,8 @@ const AddBeerForm = () => {
   };
 
   useEffect(() => {
-    handleFormVerification();
     console.log(formData);
+    handleFormVerification();
   }, [formData]);
 
   return (
@@ -113,7 +114,7 @@ const AddBeerForm = () => {
         <View noPaddingHorizontal>
           <Text>Brand</Text>
           <BrandsSearchInput
-            brandId={(value: string) =>
+            onChange={(value: { id: string; name: string }) =>
               setFormData({ ...formData, brand: value })
             }
           />
@@ -128,7 +129,7 @@ const AddBeerForm = () => {
         <View noPaddingHorizontal>
           <Text>Type</Text>
           <BeerTypesSearchField
-            beerTypeName={(value: string) =>
+            onChange={(value: string) =>
               setFormData({ ...formData, type: value })
             }
           />
@@ -144,6 +145,8 @@ const AddBeerForm = () => {
         <View noPaddingHorizontal>
           <Text>ABV</Text>
           <NumberPicker
+            title="Select the quantity of alcohol in the beer"
+            modalTitle="Select the quantity of alcohol in the beer in ° or %"
             onValueSubmit={(value: number) =>
               setFormData({ ...formData, abv: value })
             }
@@ -192,17 +195,25 @@ const AddBeerForm = () => {
           <View noPaddingHorizontal>
             <Text>Volume Available</Text>
             <BeerVolumesSearchField
-              beerVolumeQuantity={(value: string[]) =>
-                (formData.volume_available = value)
-              }
+              onChange={value => {
+                if (value[0]) {
+                  formData.volume_available = value;
+                } else {
+                  delete formData.volume_available;
+                }
+              }}
             />
           </View>
           <View noPaddingHorizontal>
             <Text>Container Available</Text>
             <BeerContainersSearchField
-              beerContainers={(value: string[]) =>
-                (formData.container_available = value)
-              }
+              onChange={value => {
+                if (value[0]) {
+                  formData.container_available = value;
+                } else {
+                  delete formData.container_available;
+                }
+              }}
             />
           </View>
           <View noPaddingHorizontal>
@@ -226,14 +237,16 @@ const AddBeerForm = () => {
           <View noPaddingHorizontal>
             <Text>IBU</Text>
             {/* TODO: display form errors and make the form validation with the form errors */}
-            <InputField
-              type="text"
-              onChangeText={(value: string) => {
-                const formValue = value.replace(',', '.');
-                if (Number(formValue) !== 0)
-                  setFormData({ ...formData, ibu: Number(formValue) });
+            <NumberPicker
+              title="Select the IBU of the beer"
+              modalTitle="Select the IBU of the beer"
+              onValueSubmit={(value: number) => {
+                if (value !== 0 || value !== 0.0) {
+                  setFormData({ ...formData, ibu: value });
+                } else {
+                  delete formData.ibu;
+                }
               }}
-              placeholder="Enter the IBU of the beer"
             />
           </View>
           <View noPaddingHorizontal>

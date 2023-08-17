@@ -6,7 +6,7 @@ const { BACKEND_URL } = Config;
 const STORE_BEER = async (
   formData: {
     name: string;
-    brand: string;
+    brand: { id: string; name: string };
     country: string;
     type: string;
     color: string;

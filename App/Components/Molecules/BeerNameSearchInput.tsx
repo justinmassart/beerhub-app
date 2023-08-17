@@ -1,22 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 
 import View from 'app/Components/Atoms/View';
 
+import BeerNamesSearchModal from 'app/Components/Molecules/Modals/BeerNamesSearchModal';
 import Box from '../Atoms/Box';
 
-import BeerVolumesSearchModal from './Modals/BeerVolumesSearchModal';
-
-const BeerVolumesSearchField = ({ onChange }) => {
+const BeerNameSearchInput = ({ onChange }) => {
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
-  const [selectedBeerVolume, setSelectedBeerVolume] = useState<string[]>([]);
+  const [selectedName, setSelectedName] = useState<string>('');
 
   const openModal = () => setModalVisible(true);
   const closeModal = () => setModalVisible(false);
-
-  const handleOnChange = value => {
-    setSelectedBeerVolume(value);
-    onChange(value);
+  const handleSelectBrand = (name: string) => {
+    setSelectedName(name);
+    onChange(name);
+    closeModal();
   };
 
   return (
@@ -24,19 +23,17 @@ const BeerVolumesSearchField = ({ onChange }) => {
       <TouchableOpacity onPress={openModal}>
         <Box input={true}>
           <View noPaddingVertical flex={1} justifyContent="center">
-            <Text>
-              {selectedBeerVolume.join(', ') || 'Select all available volumes'}
-            </Text>
+            <Text>{selectedName ?? 'Enter the name of the beer'}</Text>
           </View>
         </Box>
       </TouchableOpacity>
-      <BeerVolumesSearchModal
+      <BeerNamesSearchModal
         isVisible={isModalVisible}
         onClose={closeModal}
-        onSelect={handleOnChange}
+        onSelect={handleSelectBrand}
       />
     </View>
   );
 };
 
-export default BeerVolumesSearchField;
+export default BeerNameSearchInput;
