@@ -6,7 +6,7 @@ import Text from '../Atoms/Text';
 import Box from '../Atoms/Box';
 import DecimalNumberPickerModal from './Modals/DecimalNumberPickerModal';
 
-const NumberPicker = ({ onValueSubmit }) => {
+const NumberPicker = ({ title, modalTitle, onValueSubmit }) => {
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
   const [beerABV, setBeerABV] = useState<number | null>(null);
 
@@ -18,13 +18,12 @@ const NumberPicker = ({ onValueSubmit }) => {
       <TouchableOpacity onPress={openModal}>
         <Box input={true}>
           <View noPaddingVertical flex={1} justifyContent="center">
-            <Text size="medium">
-              {beerABV ?? 'Select the quantity of alcohol in the beer'}
-            </Text>
+            <Text size="medium">{beerABV ?? title}</Text>
           </View>
         </Box>
       </TouchableOpacity>
       <DecimalNumberPickerModal
+        modalTitle={modalTitle}
         isVisible={isModalVisible}
         onClose={closeModal}
         onValueSubmit={(value: number) => {

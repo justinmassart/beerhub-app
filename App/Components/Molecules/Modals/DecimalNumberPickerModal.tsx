@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Modal, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -6,7 +6,12 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import View from 'app/Components/Atoms/View';
 import Text from 'app/Components/Atoms/Text';
 
-const DecimalNumberPickerModal = ({ isVisible, onClose, onValueSubmit }) => {
+const DecimalNumberPickerModal = ({
+  isVisible,
+  onClose,
+  onValueSubmit,
+  modalTitle,
+}) => {
   const [integerPart, setIntegerPart] = useState('0');
   const [decimalPart, setDecimalPart] = useState('0');
 
@@ -25,7 +30,7 @@ const DecimalNumberPickerModal = ({ isVisible, onClose, onValueSubmit }) => {
       transparent={true}>
       <View noPaddingHorizontal style={styles.modalContainer}>
         <View isHorizontal alignItems="center" justifyContent="space-between">
-          <Text>Select the quantity of alcohol in the beer in ° or %</Text>
+          <Text>{modalTitle}</Text>
           <View
             noPadding
             flex={1}
